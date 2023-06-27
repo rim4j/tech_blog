@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tech_blog/common/bloc/bottom_nav_cubit.dart';
+import 'package:tech_blog/common/constants/images.dart';
+import 'package:tech_blog/common/constants/my_strings.dart';
+import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:tech_blog/features/home/presentation/pages/home_page.dart';
+import 'package:tech_blog/features/home/presentation/widgets/bottom_nav.dart';
+
+final GlobalKey<ScaffoldState> _key = GlobalKey();
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});
@@ -17,10 +24,153 @@ class _MainWrapperState extends State<MainWrapper> {
     BlocProvider.of<HomeBloc>(context).add(LoadHomeItemsEvent());
   }
 
+  PageController pageController = PageController();
+
+  List<Widget> get pages => [
+        const HomePage(),
+        Container(
+          color: Colors.blue,
+          child: const Center(
+            child: Text("bookmark"),
+          ),
+        ),
+        Container(
+          color: Colors.green,
+          child: const Center(
+            child: Text("create post"),
+          ),
+        ),
+        Container(
+          color: Colors.green,
+          child: const Center(
+            child: Text("search"),
+          ),
+        ),
+        Container(
+          color: Colors.green,
+          child: const Center(
+            child: Text("podcast"),
+          ),
+        ),
+      ];
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: HomePage(),
+    var height = MediaQuery.of(context).size.height;
+    var bodyMargin = MediaQuery.of(context).size.width / 10;
+    var textTheme = Theme.of(context).textTheme;
+
+    return Scaffold(
+      key: _key,
+      drawer: Drawer(
+        backgroundColor: AppColors.scaffoldBg,
+        child: Padding(
+          padding: EdgeInsets.only(right: bodyMargin, left: bodyMargin),
+          child: ListView(
+            children: [
+              DrawerHeader(
+                  child: Center(
+                child: Image.asset(
+                  Images.logo,
+                  scale: 3,
+                ),
+              )),
+              ListTile(
+                title: Text(
+                  MyStrings.userProfile,
+                  style: textTheme.headlineMedium,
+                ),
+                onTap: () {
+                  _key.currentState!.closeDrawer();
+                  // selectedPageIndex.value = 1;
+                },
+              ),
+              ListTile(
+                title: Text(
+                  MyStrings.aboutTec,
+                  style: textTheme.headlineMedium,
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text(
+                  MyStrings.shareTec,
+                  style: textTheme.headlineMedium,
+                ),
+                onTap: () async {
+                  // await Share.share(MyStrings.shareText);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  MyStrings.tecIngithub,
+                  style: textTheme.headlineMedium,
+                ),
+                onTap: () {
+                  // myLaunchUrl(MyStrings.techBlogGithubUrl);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: AppColors.scaffoldBg,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              onPressed: (() {
+                _key.currentState!.openDrawer();
+              }),
+              icon: const Icon(
+                Icons.menu,
+                color: AppColors.blackColor,
+              ),
+            ),
+            Image.asset(
+              Images.logo,
+              height: height / 13.6,
+            ),
+            IconButton(
+              onPressed: () {
+                // // method to show the search bar
+                // showSearch(
+                //     context: context,
+                //     // delegate to customize the search bar
+                //     delegate: CustomSearchDelegate()
+                // );
+              },
+              icon: const Icon(
+                Icons.search,
+                color: AppColors.blackColor,
+              ),
+            )
+          ],
+        ),
+      ),
+      body: Stack(
+        children: [
+          PageView(
+            controller: pageController,
+            children: pages,
+            onPageChanged: (index) {
+              BlocProvider.of<BottomNavCubit>(context)
+                  .changeSelectedIndex(index);
+            },
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: BottomNav(
+              controller: pageController,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -39,6 +39,8 @@ dependencies:
   get_it: ^7.6.0
   equatable: ^2.0.5
   dio: ^5.2.1+1
+  shimmer: ^3.0.0
+  flutter_localization: ^0.1.12
 
 dev_dependencies:
   flutter_test:

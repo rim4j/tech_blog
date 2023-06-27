@@ -51,7 +51,7 @@ class HomeRepositoryImpl implements HomeRepository {
 
         return DataSuccess(homeItems);
       } else {
-        return const DataFailed("status code not 200");
+        return const DataFailed("something went wrong please try again later");
       }
     } catch (e) {
       return const DataFailed("please check your connection");

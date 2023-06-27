@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_blog/common/bloc/bottom_nav_cubit.dart';
 import 'package:tech_blog/common/widgets/main_wrapper.dart';
 import 'package:tech_blog/config/theme/dark_theme.dart';
 import 'package:tech_blog/config/theme/light_theme.dart';
@@ -15,6 +16,7 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => locator<HomeBloc>()),
+        BlocProvider(create: (_) => BottomNavCubit()),
       ],
       child: const MyApp(),
     ),
@@ -32,7 +34,11 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.light,
-      home: const MainWrapper(),
+      // locale: const Locale('fa'),
+      home: const Directionality(
+        textDirection: TextDirection.rtl,
+        child: MainWrapper(),
+      ),
     );
   }
 }

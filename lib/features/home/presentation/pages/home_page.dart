@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tech_blog/features/home/domain/entities/poster_entity.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_items_status.dart';
+import 'package:tech_blog/features/home/presentation/widgets/home_loading.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,14 +12,11 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, homeState) {
         if (homeState.homeItemsStatus is HomeItemsLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Colors.black,
-            ),
-          );
+          return const HomeLoading();
         }
 
         if (homeState.homeItemsStatus is HomeItemsCompleted) {
+          // return const HomeLoading();
           final HomeItemsCompleted homeItemsCompleted =
               homeState.homeItemsStatus as HomeItemsCompleted;
 
@@ -30,8 +28,12 @@ class HomePage extends StatelessWidget {
         }
 
         if (homeState.homeItemsStatus is HomeItemsFailed) {
-          return const Center(
-            child: Text("failed"),
+          final HomeItemsFailed homeItemsFailed =
+              homeState.homeItemsStatus as HomeItemsFailed;
+
+          final String errorMessage = homeItemsFailed.message;
+          return Center(
+            child: Text(errorMessage),
           );
         }
 
