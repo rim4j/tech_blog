@@ -35,7 +35,7 @@ class _MainWrapperState extends State<MainWrapper> {
           ),
         ),
         Container(
-          color: Colors.green,
+          color: Colors.black,
           child: const Center(
             child: Text("create post"),
           ),
