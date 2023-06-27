@@ -49,7 +49,7 @@ class _MainWrapperState extends State<MainWrapper> {
         Container(
           color: Colors.green,
           child: const Center(
-            child: Text("podcast"),
+            child: Text("user profile"),
           ),
         ),
       ];
@@ -64,54 +64,70 @@ class _MainWrapperState extends State<MainWrapper> {
       key: _key,
       drawer: Drawer(
         backgroundColor: AppColors.scaffoldBg,
-        child: Padding(
-          padding: EdgeInsets.only(right: bodyMargin, left: bodyMargin),
-          child: ListView(
-            children: [
-              DrawerHeader(
-                  child: Center(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              child: Center(
                 child: Image.asset(
                   Images.logo,
                   scale: 3,
                 ),
-              )),
-              ListTile(
-                title: Text(
+              ),
+            ),
+            ListTile(
+              title: Padding(
+                padding: EdgeInsets.only(right: bodyMargin),
+                child: Text(
                   MyStrings.userProfile,
                   style: textTheme.headlineMedium,
                 ),
-                onTap: () {
-                  _key.currentState!.closeDrawer();
-                  // selectedPageIndex.value = 1;
-                },
               ),
-              ListTile(
-                title: Text(
+              onTap: () {
+                _key.currentState!.closeDrawer();
+                // selectedPageIndex.value = 1;
+              },
+            ),
+            ListTile(
+              title: Padding(
+                padding: EdgeInsets.only(right: bodyMargin),
+                child: Text(
                   MyStrings.aboutTec,
                   style: textTheme.headlineMedium,
                 ),
-                onTap: () {},
               ),
-              ListTile(
-                title: Text(
+              onTap: () {
+                _key.currentState!.closeDrawer();
+              },
+            ),
+            ListTile(
+              title: Padding(
+                padding: EdgeInsets.only(right: bodyMargin),
+                child: Text(
                   MyStrings.shareTec,
                   style: textTheme.headlineMedium,
                 ),
-                onTap: () async {
-                  // await Share.share(MyStrings.shareText);
-                },
               ),
-              ListTile(
-                title: Text(
+              onTap: () {
+                _key.currentState!.closeDrawer();
+
+                // await Share.share(MyStrings.shareText);
+              },
+            ),
+            ListTile(
+              title: Padding(
+                padding: EdgeInsets.only(right: bodyMargin),
+                child: Text(
                   MyStrings.tecIngithub,
                   style: textTheme.headlineMedium,
                 ),
-                onTap: () {
-                  // myLaunchUrl(MyStrings.techBlogGithubUrl);
-                },
               ),
-            ],
-          ),
+              onTap: () {
+                _key.currentState!.closeDrawer();
+
+                // myLaunchUrl(MyStrings.techBlogGithubUrl);
+              },
+            ),
+          ],
         ),
       ),
       appBar: AppBar(
@@ -165,9 +181,7 @@ class _MainWrapperState extends State<MainWrapper> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: BottomNav(
-              controller: pageController,
-            ),
+            child: BottomNav(controller: pageController),
           )
         ],
       ),

@@ -90,8 +90,8 @@ class BottomNav extends StatelessWidget {
                       selectedColor: AppColors.primaryColor,
                     ),
                     NavBarIcon(
-                      text: "Calendar",
-                      icon: Icons.podcasts,
+                      text: "",
+                      icon: index == 4 ? Icons.person : Icons.person_outline,
                       selected: index == 4 ? true : false,
                       onPressed: () {
                         BlocProvider.of<BottomNavCubit>(context)
