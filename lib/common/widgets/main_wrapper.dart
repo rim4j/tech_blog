@@ -41,13 +41,13 @@ class _MainWrapperState extends State<MainWrapper> {
           ),
         ),
         Container(
-          color: Colors.green,
+          color: Colors.red,
           child: const Center(
             child: Text("search"),
           ),
         ),
         Container(
-          color: Colors.green,
+          color: Colors.grey,
           child: const Center(
             child: Text("user profile"),
           ),
