@@ -6,6 +6,7 @@ import 'package:tech_blog/config/theme/light_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 
+import 'config/routes/on_generate_route.dart';
 import 'locator.dart';
 
 void main() async {
@@ -34,11 +35,16 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.light,
-      // locale: const Locale('fa'),
-      home: const Directionality(
-        textDirection: TextDirection.rtl,
-        child: MainWrapper(),
-      ),
+      initialRoute: "/",
+      onGenerateRoute: OnGenerateRoute.route,
+      routes: {
+        "/": (context) {
+          return const Directionality(
+            textDirection: TextDirection.rtl,
+            child: MainWrapper(),
+          );
+        }
+      },
     );
   }
 }

@@ -62,6 +62,8 @@ class HomeLoading extends StatelessWidget {
                 ),
               ),
               SizedBox(height: Dimens.large),
+              //see more
+
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
@@ -77,6 +79,8 @@ class HomeLoading extends StatelessWidget {
                 ),
               ),
               SizedBox(height: Dimens.medium),
+              //top podcast
+
               SizedBox(
                 height: height / 4,
                 child: ListView.builder(

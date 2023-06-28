@@ -33,6 +33,10 @@ class TopPodcastItem extends StatelessWidget {
               height: size.height / 7.5,
               width: size.width / 3.1,
               child: CachedNetworkImage(
+                memCacheWidth: 200,
+                memCacheHeight: 200,
+                maxHeightDiskCache: 200,
+                maxWidthDiskCache: 200,
                 imageUrl: topPodcastItem.poster!,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
@@ -40,7 +44,10 @@ class TopPodcastItem extends StatelessWidget {
                       Radius.circular(16),
                     ),
                     image: DecorationImage(
-                        image: imageProvider, fit: BoxFit.cover),
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                      scale: 1,
+                    ),
                   ),
                 ),
                 placeholder: ((context, url) => SpinKitFadingCube(

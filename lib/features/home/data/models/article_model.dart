@@ -29,7 +29,7 @@ class ArticleModel extends ArticleEntity {
     return ArticleModel(
       id: element["id"] ?? "",
       title: element["title"] ?? "",
-      image: ApiUrlConstant.hostDlUrl + element["image"],
+      image: ApiUrlConstant.hostDlUrl + (element['image'] ?? ''),
       catId: element["cat_id"] ?? "",
       catName: element["cat_name"] ?? "",
       author: element["author"] ?? 'ساسان صفری',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_blog/common/constants/page_const.dart';
 
 import 'package:tech_blog/features/home/domain/entities/article_entity.dart';
 import 'package:tech_blog/features/home/presentation/widgets/top_visited_item.dart';
@@ -35,7 +36,11 @@ class TopVisitedList extends StatelessWidget {
             textTheme: textTheme,
             index: index,
             onTap: () {
-              print(topVisitedItem.id);
+              Navigator.pushNamed(
+                context,
+                PageConst.singleArticlePage,
+                arguments: topVisitedItem.id,
+              );
             },
           );
         }),

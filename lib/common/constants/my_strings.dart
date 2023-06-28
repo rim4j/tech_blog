@@ -75,6 +75,7 @@ www.sasansafari.com
 """;
 
   static String nameFatemeAmiri = "فاطمه امیری";
+  static String notFound = "صفحه ای یافت نشد!!!";
   static String gmailFatemeAmiri = "fatemeamiri@gmail.com";
   static String exit = "خروج";
   static String cancel = "لغو";

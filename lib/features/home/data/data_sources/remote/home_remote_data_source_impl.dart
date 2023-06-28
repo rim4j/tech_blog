@@ -7,11 +7,16 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<dynamic> fetchHomeItems() async {
-    Response response = await _dio.get(
-      ApiUrlConstant.getHomeItems,
-      options: Options(responseType: ResponseType.json, method: 'GET'),
+    Response response = await _dio.get(ApiUrlConstant.getHomeItems);
+    return response;
+  }
+
+  @override
+  Future fetchInfoArticle(String id) async {
+    Response res = await _dio.get(
+      "${ApiUrlConstant.baseUrl}/article/get.php?command=info&id=$id&user_id=1",
     );
 
-    return response;
+    return res;
   }
 }
