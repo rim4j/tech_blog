@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tech_blog/common/constants/dimens.dart';
+import 'package:tech_blog/common/constants/images.dart';
+import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/common/constants/page_const.dart';
 
 import 'package:tech_blog/config/theme/app_colors.dart';
@@ -44,7 +47,11 @@ class ArticleListPage extends StatelessWidget {
         ],
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacementNamed(context, '/');
+            Navigator.restorablePushNamedAndRemoveUntil(
+              context,
+              "/",
+              (route) => false,
+            );
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -71,6 +78,25 @@ class ArticleListPage extends StatelessWidget {
           if (currentState is ArticleListCompleted) {
             final List<ArticleEntity> articleList = currentState.articleList;
 
+            if (articleList.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      MyStrings.nothing,
+                      style: textTheme.titleSmall,
+                    ),
+                    SizedBox(height: Dimens.xLarge),
+                    Image.asset(
+                      Images.empty,
+                      width: 200,
+                    )
+                  ],
+                ),
+              );
+            }
+
             return ListView.builder(
               itemCount: articleList.length,
               scrollDirection: Axis.vertical,
@@ -94,9 +120,22 @@ class ArticleListPage extends StatelessWidget {
             );
           }
           if (currentState is ArticleListError) {
-            final error = currentState.message;
+            // final error = currentState.message;
             return Center(
-              child: Text(error),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    MyStrings.apiError,
+                    style: textTheme.titleSmall,
+                  ),
+                  SizedBox(height: Dimens.xLarge),
+                  Image.asset(
+                    Images.empty,
+                    width: 200,
+                  )
+                ],
+              ),
             );
           }
 

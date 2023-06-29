@@ -74,6 +74,9 @@ www.sasansafari.com
 دونسته هات رو با  جامعه‌ی گیک های فارسی زبان به اشتراک بذار..
 """;
 
+  static const nothing = "هیج مقاله ای در این زمینه منتشر نشده است!!!";
+  static const apiError = "مشکلی در سرور بوجود امده است لطفا بعدا تلاش کنید!!!";
+
   static String nameFatemeAmiri = "فاطمه امیری";
   static String notFound = "صفحه ای یافت نشد!!!";
   static String gmailFatemeAmiri = "fatemeamiri@gmail.com";

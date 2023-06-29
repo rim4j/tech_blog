@@ -4,6 +4,7 @@ import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/common/constants/page_const.dart';
+import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
@@ -43,56 +44,64 @@ class HomePage extends StatelessWidget {
           final List<PodcastEntity> topPodcasts =
               homeItemsCompleted.topPodcasts;
 
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                SizedBox(height: Dimens.medium),
-                Poster(size: size, textTheme: textTheme, posterEntity: poster),
-                SizedBox(height: Dimens.medium),
-                TagList(
-                  textTheme: textTheme,
-                  bodyMargin: bodyMargin,
-                  tags: tags,
-                ),
-                SizedBox(height: Dimens.large),
-                SeeMore(
-                  onTap: () {
-                    //request api new article
-                    BlocProvider.of<ArticleBloc>(context)
-                        .add(LoadArticleListEvent());
+          return RefreshIndicator(
+            backgroundColor: AppColors.primaryColor,
+            color: AppColors.scaffoldBg,
+            onRefresh: () async {
+              BlocProvider.of<HomeBloc>(context).add(LoadHomeItemsEvent());
+            },
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizedBox(height: Dimens.medium),
+                  Poster(
+                      size: size, textTheme: textTheme, posterEntity: poster),
+                  SizedBox(height: Dimens.medium),
+                  TagList(
+                    textTheme: textTheme,
+                    bodyMargin: bodyMargin,
+                    tags: tags,
+                  ),
+                  SizedBox(height: Dimens.large),
+                  SeeMore(
+                    onTap: () {
+                      //request api new article
+                      BlocProvider.of<ArticleBloc>(context)
+                          .add(LoadArticleListEvent());
 
-                    Navigator.pushNamed(
-                      context,
-                      PageConst.articleListPage,
-                      arguments: "مقالات جدید",
-                    );
-                  },
-                  bodyMargin: bodyMargin,
-                  textTheme: textTheme,
-                  title: MyStrings.viewHottestBlog,
-                  iconImage: ICONS.bluePen,
-                ),
-                TopVisitedList(
-                  topVisited: topVisited,
-                  size: size,
-                  bodyMargin: bodyMargin,
-                  textTheme: textTheme,
-                ),
-                SeeMore(
-                  onTap: () {},
-                  bodyMargin: bodyMargin,
-                  textTheme: textTheme,
-                  title: MyStrings.viewHottestPodCasts,
-                  iconImage: ICONS.mic,
-                ),
-                TopPodcastList(
-                  size: size,
-                  bodyMargin: bodyMargin,
-                  topPodcasts: topPodcasts,
-                ),
-                SizedBox(height: Dimens.large),
-              ],
+                      Navigator.pushNamed(
+                        context,
+                        PageConst.articleListPage,
+                        arguments: "مقالات جدید",
+                      );
+                    },
+                    bodyMargin: bodyMargin,
+                    textTheme: textTheme,
+                    title: MyStrings.viewHottestBlog,
+                    iconImage: ICONS.bluePen,
+                  ),
+                  TopVisitedList(
+                    topVisited: topVisited,
+                    size: size,
+                    bodyMargin: bodyMargin,
+                    textTheme: textTheme,
+                  ),
+                  SeeMore(
+                    onTap: () {},
+                    bodyMargin: bodyMargin,
+                    textTheme: textTheme,
+                    title: MyStrings.viewHottestPodCasts,
+                    iconImage: ICONS.mic,
+                  ),
+                  TopPodcastList(
+                    size: size,
+                    bodyMargin: bodyMargin,
+                    topPodcasts: topPodcasts,
+                  ),
+                  SizedBox(height: Dimens.large),
+                ],
+              ),
             ),
           );
         }
