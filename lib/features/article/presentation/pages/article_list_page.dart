@@ -9,23 +9,12 @@ import 'package:tech_blog/features/article/presentation/bloc/article_list_status
 import 'package:tech_blog/features/article/presentation/widgets/article_horizontal_item.dart';
 import 'package:tech_blog/features/article/presentation/widgets/article_page_loading.dart';
 
-class ArticleListPage extends StatefulWidget {
+class ArticleListPage extends StatelessWidget {
   final String title;
   const ArticleListPage({
     Key? key,
     required this.title,
   }) : super(key: key);
-
-  @override
-  State<ArticleListPage> createState() => _ArticleListPageState();
-}
-
-class _ArticleListPageState extends State<ArticleListPage> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<ArticleBloc>(context).add(LoadArticleListEvent());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +32,7 @@ class _ArticleListPageState extends State<ArticleListPage> {
             padding: const EdgeInsets.only(left: 16),
             child: Center(
                 child: Text(
-              widget.title,
+              title,
               style: const TextStyle(
                 fontFamily: 'dana',
                 fontSize: 17,
