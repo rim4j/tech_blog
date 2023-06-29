@@ -4,6 +4,7 @@ import 'package:tech_blog/features/article/data/datasources/remote/article_remot
 import 'package:tech_blog/features/article/data/repositories/article_repository_impl.dart';
 import 'package:tech_blog/features/article/domain/repositories/article_repository.dart';
 import 'package:tech_blog/features/article/domain/usecases/get_article_list_usecase.dart';
+import 'package:tech_blog/features/article/domain/usecases/get_article_list_with_id_usecase.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source_impl.dart';
@@ -40,6 +41,9 @@ Future<void> setup() async {
   locator.registerSingleton<GetArticleListUseCase>(
       GetArticleListUseCase(articleRepository: locator()));
 
+  locator.registerSingleton<GetArticleListWithIdUseCase>(
+      GetArticleListWithIdUseCase(articleRepository: locator()));
+
   //state management
   locator.registerSingleton<HomeBloc>(
     HomeBloc(
@@ -49,8 +53,8 @@ Future<void> setup() async {
 
   locator.registerSingleton<ArticleBloc>(
     ArticleBloc(
-      getSingleArticleUseCase: locator(),
-      getArticleListUseCase: locator(),
-    ),
+        getSingleArticleUseCase: locator(),
+        getArticleListUseCase: locator(),
+        getArticleListWithIdUseCase: locator()),
   );
 }

@@ -11,3 +11,11 @@ class LoadSingleArticleEvent extends ArticleEvent {
 }
 
 class LoadArticleListEvent extends ArticleEvent {}
+
+class LoadArticleListWithIdEvent extends ArticleEvent {
+  String id;
+
+  LoadArticleListWithIdEvent({
+    required this.id,
+  });
+}

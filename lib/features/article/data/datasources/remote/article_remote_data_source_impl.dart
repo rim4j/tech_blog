@@ -20,4 +20,23 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
     return res;
   }
+
+  @override
+  Future fetchArticlesWithTagId(String id) async {
+    // final queryParam = {
+    //   'command': 'get_articles_with_tag_id',
+    //   'tag_id': id,
+    //   'user_id': ''
+    // };
+    // final uri =
+    //     Uri.https(ApiUrlConstant.baseUrl, 'article/get.php?', queryParam);
+
+    // final newUri =
+    //     "https://techblog.sasansafari.com/Techblog/api/article/get.php?command=get_articles_with_tag_id&tag_id=$id&user_id=";
+
+    Response res = await _dio.get(
+        "https://techblog.sasansafari.com/Techblog/api/article/get.php?command=get_articles_with_tag_id&tag_id=$id&user_id=");
+
+    return res;
+  }
 }

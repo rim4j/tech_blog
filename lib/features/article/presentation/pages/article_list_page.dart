@@ -44,7 +44,7 @@ class ArticleListPage extends StatelessWidget {
         ],
         leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/');
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 16),

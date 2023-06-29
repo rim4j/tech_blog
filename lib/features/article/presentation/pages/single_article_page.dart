@@ -208,7 +208,16 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
                                 ),
                               ),
                               onPressed: () {
-                                print(tagItem.id);
+                                BlocProvider.of<ArticleBloc>(context).add(
+                                  LoadArticleListWithIdEvent(
+                                    id: tagItem.id!,
+                                  ),
+                                );
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  PageConst.articleListPage,
+                                  arguments: tagItem.title,
+                                );
                               },
                               child: Text(tagItem.title!),
                             ),
