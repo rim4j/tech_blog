@@ -32,7 +32,7 @@ class TopVisitedList extends StatelessWidget {
           return ArticleItem(
             bodyMargin: bodyMargin,
             size: size,
-            topVisitedItem: topVisitedItem,
+            articleItem: topVisitedItem,
             textTheme: textTheme,
             index: index,
             onTap: () {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/common/constants/page_const.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
+import 'package:tech_blog/features/article/presentation/pages/article_list_page.dart';
 import 'package:tech_blog/features/article/presentation/pages/single_article_page.dart';
 
 class OnGenerateRoute {
@@ -34,6 +35,13 @@ class OnGenerateRoute {
           return routeBuilder(const NoScreenFound());
         }
 
+      case PageConst.articleListPage:
+        if (args is String) {
+          return routeBuilder(ArticleListPage(title: args));
+        } else {
+          return routeBuilder(const NoScreenFound());
+        }
+
       default:
         return routeBuilder(const NoScreenFound());
     }
@@ -52,8 +60,13 @@ class NoScreenFound extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
-        backgroundColor: AppColors.scaffoldBg,
-        title: Text(MyStrings.notFound),
+        backgroundColor: AppColors.primaryColor,
+        title: Text(
+          MyStrings.notFound,
+          style: const TextStyle(
+            fontSize: 20,
+          ),
+        ),
       ),
       body: Center(
         child: Text(MyStrings.notFound),

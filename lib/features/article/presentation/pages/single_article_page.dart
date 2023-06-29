@@ -11,6 +11,7 @@ import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 import 'package:tech_blog/features/article/domain/entities/single_article_entity.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/article/presentation/bloc/single_article_status.dart';
+import 'package:tech_blog/features/article/presentation/widgets/single_page_loading.dart';
 import 'package:tech_blog/features/home/domain/entities/tag_entity.dart';
 
 class SingleArticlePage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
 
   @override
   Widget build(BuildContext context) {
-    // var height = MediaQuery.of(context).size.height;
+    var height = MediaQuery.of(context).size.height;
     // var width = MediaQuery.of(context).size.width;
     // var bodyMargin = MediaQuery.of(context).size.width / 10;
     var textTheme = Theme.of(context).textTheme;
@@ -45,9 +46,7 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
       body: BlocBuilder<ArticleBloc, ArticleState>(
         builder: (context, homeState) {
           if (homeState.singleArticleStatus is SingleArticleLoading) {
-            return Center(
-              child: Text("loading"),
-            );
+            return const SinglePageLoading();
           }
 
           if (homeState.singleArticleStatus is SingleArticleCompleted) {
@@ -67,7 +66,7 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
                       children: [
                         //image
                         SizedBox(
-                          height: 300,
+                          height: height / 3,
                           child: CachedNetworkImage(
                             imageUrl: singleArticleInfo.image!,
                             imageBuilder: ((context, imageProvider) => Image(
@@ -190,7 +189,7 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
                     SizedBox(
                       height: Dimens.medium + 9,
                     ),
-
+                    //tags
                     SizedBox(
                       height: 50,
                       child: ListView.builder(
@@ -208,14 +207,16 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                print(tagItem.id);
+                              },
                               child: Text(tagItem.title!),
                             ),
                           );
                         },
                       ),
                     ),
-
+                    //related list
                     SizedBox(
                       height: size.height / 3.5,
                       child: ListView.builder(
@@ -228,7 +229,7 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
                           return ArticleItem(
                             // bodyMargin: bodyMargin,
                             size: size,
-                            topVisitedItem: topVisitedItem,
+                            articleItem: topVisitedItem,
                             textTheme: textTheme,
                             index: index,
                             onTap: () {

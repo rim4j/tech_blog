@@ -13,4 +13,11 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
 
     return res;
   }
+
+  @override
+  Future fetchNewArticleListData() async {
+    Response res = await _dio.get(ApiUrlConstant.getArticleList);
+
+    return res;
+  }
 }

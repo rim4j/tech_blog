@@ -10,7 +10,7 @@ class ArticleItem extends StatelessWidget {
     super.key,
     this.bodyMargin,
     required this.size,
-    required this.topVisitedItem,
+    required this.articleItem,
     required this.textTheme,
     required this.index,
     required this.onTap,
@@ -19,7 +19,7 @@ class ArticleItem extends StatelessWidget {
   final double? bodyMargin;
   final int index;
   final Size size;
-  final ArticleEntity topVisitedItem;
+  final ArticleEntity articleItem;
   final TextTheme textTheme;
 
   @override
@@ -44,7 +44,7 @@ class ArticleItem extends StatelessWidget {
                       memCacheHeight: 200,
                       // maxHeightDiskCache: 200,
                       // maxWidthDiskCache: 200,
-                      imageUrl: topVisitedItem.image!,
+                      imageUrl: articleItem.image!,
                       imageBuilder: ((context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(
@@ -82,13 +82,13 @@ class ArticleItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
-                            topVisitedItem.author!,
+                            articleItem.author!,
                             style: textTheme.titleMedium,
                           ),
                           Row(
                             children: [
                               Text(
-                                topVisitedItem.view!,
+                                articleItem.view!,
                                 style: textTheme.titleMedium,
                               ),
                               SizedBox(
@@ -111,7 +111,7 @@ class ArticleItem extends StatelessWidget {
             SizedBox(
               width: size.width / 2.4,
               child: Text(
-                topVisitedItem.title!,
+                articleItem.title!,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),

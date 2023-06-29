@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
+import 'package:tech_blog/common/constants/page_const.dart';
 import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/poster_entity.dart';
@@ -55,6 +56,13 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: Dimens.large),
                 SeeMore(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      PageConst.articleListPage,
+                      arguments: "مقالات جدید",
+                    );
+                  },
                   bodyMargin: bodyMargin,
                   textTheme: textTheme,
                   title: MyStrings.viewHottestBlog,
@@ -67,6 +75,7 @@ class HomePage extends StatelessWidget {
                   textTheme: textTheme,
                 ),
                 SeeMore(
+                  onTap: () {},
                   bodyMargin: bodyMargin,
                   textTheme: textTheme,
                   title: MyStrings.viewHottestPodCasts,
