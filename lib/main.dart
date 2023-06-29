@@ -4,7 +4,9 @@ import 'package:tech_blog/common/widgets/main_wrapper.dart';
 import 'package:tech_blog/config/theme/dark_theme.dart';
 import 'package:tech_blog/config/theme/light_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'config/routes/on_generate_route.dart';
 import 'locator.dart';
@@ -17,6 +19,7 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => locator<HomeBloc>()),
+        BlocProvider(create: (_) => locator<ArticleBloc>()),
         BlocProvider(create: (_) => BottomNavCubit()),
       ],
       child: const MyApp(),
@@ -37,12 +40,19 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       initialRoute: "/",
       onGenerateRoute: OnGenerateRoute.route,
+      locale: const Locale("fa", ""),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale("en", ""),
+        Locale("fa", ""),
+      ],
       routes: {
         "/": (context) {
-          return const Directionality(
-            textDirection: TextDirection.rtl,
-            child: MainWrapper(),
-          );
+          return MainWrapper();
         }
       },
     );

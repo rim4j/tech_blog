@@ -1,5 +1,5 @@
 import 'package:tech_blog/common/constants/api_constants.dart';
-import 'package:tech_blog/features/home/domain/entities/single_article_entity.dart';
+import 'package:tech_blog/features/article/domain/entities/single_article_entity.dart';
 
 class SingleArticleModel extends SingleArticleEntity {
   const SingleArticleModel({

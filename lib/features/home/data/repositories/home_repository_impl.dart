@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:tech_blog/common/resources/data_state.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source.dart';
-import 'package:tech_blog/features/home/data/models/article_model.dart';
+import 'package:tech_blog/features/article/data/models/article_model.dart';
 import 'package:tech_blog/features/home/data/models/podcast_model.dart';
 import 'package:tech_blog/features/home/data/models/poster_model.dart';
-import 'package:tech_blog/features/home/data/models/single_article_model.dart';
 import 'package:tech_blog/features/home/data/models/tag_model.dart';
-import 'package:tech_blog/features/home/domain/entities/article_entity.dart';
+import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/tag_entity.dart';
 import 'package:tech_blog/features/home/domain/repositories/home_repository.dart';
@@ -51,45 +50,6 @@ class HomeRepositoryImpl implements HomeRepository {
         homeItems["tags"] = tags;
 
         return DataSuccess(homeItems);
-      } else {
-        return const DataFailed("something went wrong please try again later");
-      }
-    } catch (e) {
-      return const DataFailed("please check your connection");
-    }
-  }
-
-  @override
-  Future<DataState<Map<String, dynamic>>> fetchSingleArticle(String id) async {
-    try {
-      Response response = await homeRemoteDataSource.fetchInfoArticle(id);
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> singleArticleItems = {
-          //single article model
-          "info": {},
-          //article model
-          "related": [],
-          //tag model
-          "tags": [],
-        };
-
-        List<ArticleEntity> related = [];
-        List<TagEntity> tags = [];
-
-        singleArticleItems["info"] =
-            SingleArticleModel.fromJson(response.data["info"]);
-
-        response.data["related"]
-            .forEach((item) => related.add(ArticleModel.fromJson(item)));
-
-        response.data["tags"]
-            .forEach((item) => tags.add(TagModel.fromJson(item)));
-
-        singleArticleItems["related"] = related;
-        singleArticleItems["tags"] = tags;
-
-        return DataSuccess(singleArticleItems);
       } else {
         return const DataFailed("something went wrong please try again later");
       }

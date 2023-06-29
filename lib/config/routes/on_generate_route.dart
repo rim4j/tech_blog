@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/common/constants/page_const.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
-import 'package:tech_blog/features/home/presentation/pages/single_article_page.dart';
+import 'package:tech_blog/features/article/presentation/pages/single_article_page.dart';
 
 class OnGenerateRoute {
   static Route<dynamic>? route(RouteSettings settings) {

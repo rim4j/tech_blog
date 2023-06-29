@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:tech_blog/features/home/domain/entities/article_entity.dart';
-import 'package:tech_blog/features/home/domain/entities/single_article_entity.dart';
+import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
+import 'package:tech_blog/features/article/domain/entities/single_article_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/tag_entity.dart';
 
 @immutable

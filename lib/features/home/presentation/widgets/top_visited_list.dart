@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tech_blog/common/constants/page_const.dart';
+import 'package:tech_blog/common/widgets/article_item.dart';
 
-import 'package:tech_blog/features/home/domain/entities/article_entity.dart';
-import 'package:tech_blog/features/home/presentation/widgets/top_visited_item.dart';
+import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 
 class TopVisitedList extends StatelessWidget {
   const TopVisitedList({
@@ -29,7 +29,7 @@ class TopVisitedList extends StatelessWidget {
         itemBuilder: ((context, index) {
           final topVisitedItem = topVisited[index];
           //blog item
-          return TopVisitedItem(
+          return ArticleItem(
             bodyMargin: bodyMargin,
             size: size,
             topVisitedItem: topVisitedItem,

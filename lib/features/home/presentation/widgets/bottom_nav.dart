@@ -34,7 +34,7 @@ class BottomNav extends StatelessWidget {
                 heightFactor: 0.6,
                 child: FloatingActionButton(
                   backgroundColor: AppColors.primaryColor,
-                  elevation: 0.1,
+                  elevation: 10,
                   onPressed: () {
                     BlocProvider.of<BottomNavCubit>(context)
                         .changeSelectedIndex(2);

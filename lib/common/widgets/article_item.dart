@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
-import 'package:tech_blog/features/home/domain/entities/article_entity.dart';
+import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 
-class TopVisitedItem extends StatelessWidget {
-  const TopVisitedItem({
+class ArticleItem extends StatelessWidget {
+  const ArticleItem({
     super.key,
-    required this.bodyMargin,
+    this.bodyMargin,
     required this.size,
     required this.topVisitedItem,
     required this.textTheme,
@@ -16,7 +16,7 @@ class TopVisitedItem extends StatelessWidget {
     required this.onTap,
   });
   final VoidCallback onTap;
-  final double bodyMargin;
+  final double? bodyMargin;
   final int index;
   final Size size;
   final ArticleEntity topVisitedItem;
@@ -27,8 +27,9 @@ class TopVisitedItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding:
-            EdgeInsets.only(right: index == 0 ? bodyMargin : Dimens.medium),
+        padding: EdgeInsets.only(
+          right: index == 0 ? bodyMargin ?? Dimens.medium : Dimens.medium,
+        ),
         child: Column(
           children: [
             Padding(
@@ -39,6 +40,10 @@ class TopVisitedItem extends StatelessWidget {
                 child: Stack(
                   children: [
                     CachedNetworkImage(
+                      memCacheWidth: 200,
+                      memCacheHeight: 200,
+                      // maxHeightDiskCache: 200,
+                      // maxWidthDiskCache: 200,
                       imageUrl: topVisitedItem.image!,
                       imageBuilder: ((context, imageProvider) => Container(
                             decoration: BoxDecoration(
@@ -61,10 +66,12 @@ class TopVisitedItem extends StatelessWidget {
                             color: AppColors.primaryColor,
                             size: Dimens.large,
                           )),
-                      errorWidget: ((context, url, error) => Icon(
-                            Icons.image_not_supported_outlined,
-                            size: Dimens.xLarge - 14,
-                            color: AppColors.greyColor,
+                      errorWidget: ((context, url, error) => Center(
+                            child: Icon(
+                              Icons.image_not_supported_outlined,
+                              size: Dimens.xLarge - 14,
+                              color: AppColors.greyColor,
+                            ),
                           )),
                     ),
                     Positioned(
