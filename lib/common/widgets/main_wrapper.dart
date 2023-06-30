@@ -9,8 +9,6 @@ import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:tech_blog/features/home/presentation/pages/home_page.dart';
 import 'package:tech_blog/features/home/presentation/widgets/bottom_nav.dart';
 
-final GlobalKey<ScaffoldState> _key = GlobalKey();
-
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});
 
@@ -19,6 +17,8 @@ class MainWrapper extends StatefulWidget {
 }
 
 class _MainWrapperState extends State<MainWrapper> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
   @override
   void initState() {
     super.initState();
