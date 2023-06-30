@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:tech_blog/features/article/data/datasources/remote/article_remote_data_source.dart';
-import 'package:tech_blog/features/article/data/datasources/remote/article_remote_data_source_impl.dart';
+import 'package:tech_blog/features/article/data/data_sources/remote/article_remote_data_source.dart';
+import 'package:tech_blog/features/article/data/data_sources/remote/article_remote_data_source_impl.dart';
 import 'package:tech_blog/features/article/data/repositories/article_repository_impl.dart';
 import 'package:tech_blog/features/article/domain/repositories/article_repository.dart';
 import 'package:tech_blog/features/article/domain/usecases/get_article_list_usecase.dart';

@@ -44,6 +44,8 @@ dependencies:
   flutter_spinkit: ^5.2.0
   logger: ^1.4.0
   flutter_localization: ^0.1.12
+  flutter_svg: ^2.0.7
+  top_snackbar_flutter: ^3.0.0+1
 
 dev_dependencies:
   flutter_test:

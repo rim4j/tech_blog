@@ -96,7 +96,8 @@ www.sasansafari.com
   static String houre = "ساعت";
   static String isEmail = "isEmail:";
   static String tecEmail = "techblog@gmail.com";
-  static String enterEmaile = "لطفا ایمیل خود را به درستی وارد کنید";
+  static String enterEmail = "لطفا ایمیل خود را وارد کنید";
+  static String enterVerifyCode = "لطفا کدی که به ایمیلت ارسال شده را وارد کن";
   static String formatEmailNotCorrect =
       "فرمت ایمیل درست نمیباشد, لطفا ایمیل خود را به درستی وارد کنید";
   static String selectAudioFile = "انتخاب فابل صوتی";

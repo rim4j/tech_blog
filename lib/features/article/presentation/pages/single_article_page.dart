@@ -60,6 +60,7 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
             List<ArticleEntity> related = singleArticleCompleted.related;
             return SafeArea(
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     Stack(

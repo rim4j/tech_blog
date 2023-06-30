@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:tech_blog/common/resources/data_state.dart';
-import 'package:tech_blog/features/article/data/datasources/remote/article_remote_data_source.dart';
+import 'package:tech_blog/features/article/data/data_sources/remote/article_remote_data_source.dart';
 import 'package:tech_blog/features/article/domain/repositories/article_repository.dart';
 import 'package:tech_blog/features/article/data/models/article_model.dart';
 import 'package:tech_blog/features/article/data/models/single_article_model.dart';
