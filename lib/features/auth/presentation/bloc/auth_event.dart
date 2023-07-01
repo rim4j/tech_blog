@@ -7,3 +7,9 @@ class RegisterEvent extends AuthEvent {
 
   RegisterEvent({required this.email});
 }
+
+class VerifyUserEvent extends AuthEvent {
+  final VerifyUserParams verifyUserParams;
+
+  VerifyUserEvent({required this.verifyUserParams});
+}

@@ -11,6 +11,7 @@ import 'package:tech_blog/features/auth/data/data_sources/remote/auth_remote_dat
 import 'package:tech_blog/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:tech_blog/features/auth/domain/repositories/auth_repository.dart';
 import 'package:tech_blog/features/auth/domain/usecases/register_usecase.dart';
+import 'package:tech_blog/features/auth/domain/usecases/verify_user_usecase.dart';
 import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source_impl.dart';
@@ -58,6 +59,9 @@ Future<void> setup() async {
   locator.registerSingleton<RegisterUseCase>(
       RegisterUseCase(authRepository: locator()));
 
+  locator.registerSingleton<VerifyUserUseCase>(
+      VerifyUserUseCase(authRepository: locator()));
+
   //!state management
   locator.registerSingleton<HomeBloc>(
     HomeBloc(
@@ -73,8 +77,6 @@ Future<void> setup() async {
   );
 
   locator.registerSingleton<AuthBloc>(
-    AuthBloc(
-      registerUseCase: locator(),
-    ),
+    AuthBloc(registerUseCase: locator(), verifyUserUseCase: locator()),
   );
 }

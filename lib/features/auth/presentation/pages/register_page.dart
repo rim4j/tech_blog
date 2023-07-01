@@ -4,12 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
+import 'package:tech_blog/common/params/verify_user_params.dart';
 import 'package:tech_blog/common/utils/custom_snackbar.dart';
 import 'package:tech_blog/common/widgets/custom_button.dart';
 import 'package:tech_blog/common/widgets/form_container_widget.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tech_blog/features/auth/presentation/bloc/register_status.dart';
+import 'package:tech_blog/features/auth/presentation/bloc/verify_user_status.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -216,22 +218,50 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: MyStrings.stars,
                         ),
                       ),
-                      SizedBox(
-                        width: size.width / 3,
-                        child: CustomButton(
-                          title: MyStrings.continuation,
-                          onTap: () {
-                            if (_verifyCodeController.text.isEmpty) {
-                              CustomSnackBars.showSnackError(
-                                context,
-                                MyStrings.enterVerifyCode,
-                              );
-                            } else {
-                              print(_emailController.text);
-                              print(_verifyCodeController.text);
-                            }
-                          },
-                        ),
+                      BlocConsumer<AuthBloc, AuthState>(
+                        listener: (context, authState) {
+                          if (authState.verifyUserStatus is VerifyUserFailed) {
+                            final VerifyUserFailed registerFailed =
+                                authState.verifyUserStatus as VerifyUserFailed;
+
+                            CustomSnackBars.showSnackError(
+                                context, registerFailed.message);
+                          }
+                        },
+                        builder: (context, authState) {
+                          final RegisterSuccess registerSuccess =
+                              authState.registerStatus as RegisterSuccess;
+
+                          return SizedBox(
+                            width: size.width / 3,
+                            child: CustomButton(
+                              title: MyStrings.continuation,
+                              loading: authState.verifyUserStatus
+                                      is VerifyUserLoading
+                                  ? true
+                                  : false,
+                              onTap: () {
+                                if (_verifyCodeController.text.isEmpty) {
+                                  CustomSnackBars.showSnackError(
+                                    context,
+                                    MyStrings.enterVerifyCode,
+                                  );
+                                } else {
+                                  VerifyUserParams verifyUserParams =
+                                      VerifyUserParams(
+                                    email: _emailController.text,
+                                    userId: registerSuccess.userId,
+                                    code: _verifyCodeController.text,
+                                  );
+
+                                  BlocProvider.of<AuthBloc>(context).add(
+                                      VerifyUserEvent(
+                                          verifyUserParams: verifyUserParams));
+                                }
+                              },
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
