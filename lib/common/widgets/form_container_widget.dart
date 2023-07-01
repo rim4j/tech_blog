@@ -34,7 +34,7 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
       height: 50,
       decoration: BoxDecoration(
         color: AppColors.greyColor.withOpacity(.2),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: TextFormField(
         textAlign: TextAlign.center,

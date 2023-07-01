@@ -5,6 +5,7 @@ import 'package:tech_blog/config/theme/dark_theme.dart';
 import 'package:tech_blog/config/theme/light_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
+import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -20,6 +21,7 @@ void main() async {
       providers: [
         BlocProvider(create: (_) => locator<HomeBloc>()),
         BlocProvider(create: (_) => locator<ArticleBloc>()),
+        BlocProvider(create: (_) => locator<AuthBloc>()),
         BlocProvider(create: (_) => BottomNavCubit()),
       ],
       child: const MyApp(),

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/common/utils/custom_snackbar.dart';
+import 'package:tech_blog/common/widgets/custom_button.dart';
 import 'package:tech_blog/common/widgets/form_container_widget.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
+import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:tech_blog/features/auth/presentation/bloc/register_status.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -44,13 +48,16 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: Dimens.large),
-              child: ElevatedButton(
-                onPressed: () {
-                  _showEmailBottomSheet(context, size, textTheme);
-                },
-                child: Text(MyStrings.letsGo),
+            SizedBox(
+              width: size.width / 3,
+              child: Padding(
+                padding: EdgeInsets.only(top: Dimens.large),
+                child: CustomButton(
+                  onTap: () {
+                    _showEmailBottomSheet(context, size, textTheme);
+                  },
+                  title: MyStrings.letsGo,
+                ),
               ),
             ),
           ],
@@ -121,16 +128,35 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: MyStrings.tecEmail,
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          bool isValid = isValidEmail(_emailController.text);
-
-                          if (isValid) {
+                      BlocConsumer<AuthBloc, AuthState>(
+                        listener: (context, authState) {
+                          if (authState.registerStatus is RegisterSuccess) {
                             Navigator.pop(context);
                             _activateCodeBottomSheet(context, size, textTheme);
                           }
                         },
-                        child: Text(MyStrings.continuation),
+                        builder: (context, authState) {
+                          return SizedBox(
+                            width: size.width / 3,
+                            child: CustomButton(
+                              loading:
+                                  authState.registerStatus is RegisterLoading
+                                      ? true
+                                      : false,
+                              title: MyStrings.continuation,
+                              onTap: () {
+                                bool isValid =
+                                    isValidEmail(_emailController.text);
+
+                                if (isValid) {
+                                  BlocProvider.of<AuthBloc>(context).add(
+                                    RegisterEvent(email: _emailController.text),
+                                  );
+                                }
+                              },
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -190,19 +216,22 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: MyStrings.stars,
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_verifyCodeController.text.isEmpty) {
-                            CustomSnackBars.showSnackError(
-                              context,
-                              MyStrings.enterVerifyCode,
-                            );
-                          } else {
-                            print(_emailController.text);
-                            print(_verifyCodeController.text);
-                          }
-                        },
-                        child: Text(MyStrings.continuation),
+                      SizedBox(
+                        width: size.width / 3,
+                        child: CustomButton(
+                          title: MyStrings.continuation,
+                          onTap: () {
+                            if (_verifyCodeController.text.isEmpty) {
+                              CustomSnackBars.showSnackError(
+                                context,
+                                MyStrings.enterVerifyCode,
+                              );
+                            } else {
+                              print(_emailController.text);
+                              print(_verifyCodeController.text);
+                            }
+                          },
+                        ),
                       ),
                     ],
                   ),

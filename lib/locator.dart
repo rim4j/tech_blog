@@ -6,6 +6,12 @@ import 'package:tech_blog/features/article/domain/repositories/article_repositor
 import 'package:tech_blog/features/article/domain/usecases/get_article_list_usecase.dart';
 import 'package:tech_blog/features/article/domain/usecases/get_article_list_with_id_usecase.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
+import 'package:tech_blog/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
+import 'package:tech_blog/features/auth/data/data_sources/remote/auth_remote_data_source_impl.dart';
+import 'package:tech_blog/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:tech_blog/features/auth/domain/repositories/auth_repository.dart';
+import 'package:tech_blog/features/auth/domain/usecases/register_usecase.dart';
+import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source_impl.dart';
 import 'package:tech_blog/features/home/data/repositories/home_repository_impl.dart';
@@ -18,12 +24,14 @@ import 'features/article/domain/usecases/get_single_article_usecase.dart';
 GetIt locator = GetIt.instance;
 
 Future<void> setup() async {
-  //data source
+  //!data source
   locator.registerSingleton<HomeRemoteDataSource>(HomeRemoteDataSourceImpl());
   locator.registerSingleton<ArticleRemoteDataSource>(
       ArticleRemoteDataSourceImpl());
 
-  //repositories
+  locator.registerSingleton<AuthRemoteDataSource>(AuthRemoteDataSourceImpl());
+
+  //!repositories
   locator.registerSingleton<HomeRepository>(
     HomeRepositoryImpl(homeRemoteDataSource: locator()),
   );
@@ -31,7 +39,10 @@ Future<void> setup() async {
   locator.registerSingleton<ArticleRepository>(
       ArticleRepositoryImpl(articleRemoteDataSource: locator()));
 
-  //useCases
+  locator.registerSingleton<AuthRepository>(
+      AuthRepositoryImpl(authRemoteDataSource: locator()));
+
+  //!useCases
   locator.registerSingleton<GetHomeItemsUseCase>(
       GetHomeItemsUseCase(homeRepository: locator()));
 
@@ -44,7 +55,10 @@ Future<void> setup() async {
   locator.registerSingleton<GetArticleListWithIdUseCase>(
       GetArticleListWithIdUseCase(articleRepository: locator()));
 
-  //state management
+  locator.registerSingleton<RegisterUseCase>(
+      RegisterUseCase(authRepository: locator()));
+
+  //!state management
   locator.registerSingleton<HomeBloc>(
     HomeBloc(
       getHomeItemsUseCase: locator(),
@@ -56,5 +70,11 @@ Future<void> setup() async {
         getSingleArticleUseCase: locator(),
         getArticleListUseCase: locator(),
         getArticleListWithIdUseCase: locator()),
+  );
+
+  locator.registerSingleton<AuthBloc>(
+    AuthBloc(
+      registerUseCase: locator(),
+    ),
   );
 }
