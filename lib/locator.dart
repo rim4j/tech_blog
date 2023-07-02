@@ -24,6 +24,10 @@ import 'package:tech_blog/features/home/data/repositories/home_repository_impl.d
 import 'package:tech_blog/features/home/domain/repositories/home_repository.dart';
 import 'package:tech_blog/features/home/domain/usecases/get_home_items_usecase.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
+import 'package:tech_blog/features/intro/data/repositories/intro_repository_impl.dart';
+import 'package:tech_blog/features/intro/domain/repositories/intro_repository.dart';
+import 'package:tech_blog/features/intro/domain/usecases/check_connection_usecase.dart';
+import 'package:tech_blog/features/intro/presentation/bloc/intro_bloc.dart';
 
 import 'features/article/domain/usecases/get_single_article_usecase.dart';
 
@@ -53,6 +57,9 @@ Future<void> setup() async {
     ),
   );
 
+  //intro  repository
+  locator.registerSingleton<IntroRepository>(IntroRepositoryImpl());
+
   //!useCases
   locator.registerSingleton<GetHomeItemsUseCase>(
       GetHomeItemsUseCase(homeRepository: locator()));
@@ -81,6 +88,10 @@ Future<void> setup() async {
   locator.registerSingleton<IsAuthUseCase>(
       IsAuthUseCase(authRepository: locator()));
 
+  //intro usecase
+  locator.registerSingleton<CheckConnectionUseCase>(
+      CheckConnectionUseCase(introRepository: locator()));
+
   //!state management
   locator.registerSingleton<HomeBloc>(
     HomeBloc(
@@ -103,4 +114,7 @@ Future<void> setup() async {
       saveUserIdUseCase: locator(),
     ),
   );
+  //intro bloc
+  locator.registerSingleton<IntroBloc>(
+      IntroBloc(checkConnectionUseCase: locator()));
 }

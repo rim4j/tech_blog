@@ -7,6 +7,7 @@ import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tech_blog/features/intro/presentation/bloc/intro_bloc.dart';
 import 'package:tech_blog/features/intro/presentation/pages/splash_page.dart';
 
 import 'config/routes/on_generate_route.dart';
@@ -22,6 +23,7 @@ void main() async {
         BlocProvider(create: (_) => locator<HomeBloc>()),
         BlocProvider(create: (_) => locator<ArticleBloc>()),
         BlocProvider(create: (_) => locator<AuthBloc>()),
+        BlocProvider(create: (_) => locator<IntroBloc>()),
         BlocProvider(create: (_) => BottomNavCubit()),
       ],
       child: const MyApp(),
