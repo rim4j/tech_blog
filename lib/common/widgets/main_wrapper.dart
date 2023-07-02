@@ -4,7 +4,7 @@ import 'package:tech_blog/common/bloc/bottom_nav_cubit.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
-import 'package:tech_blog/features/auth/presentation/pages/register_page.dart';
+import 'package:tech_blog/features/auth/presentation/pages/profile_page.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:tech_blog/features/home/presentation/pages/home_page.dart';
 import 'package:tech_blog/features/home/presentation/widgets/bottom_nav.dart';
@@ -35,19 +35,19 @@ class _MainWrapperState extends State<MainWrapper> {
             child: Text("bookmark"),
           ),
         ),
-        RegisterPage(),
+        Container(
+          color: Colors.blue,
+          child: const Center(
+            child: Text("create post"),
+          ),
+        ),
         Container(
           color: Colors.red,
           child: const Center(
             child: Text("search"),
           ),
         ),
-        Container(
-          color: Colors.grey,
-          child: const Center(
-            child: Text("user profile"),
-          ),
-        ),
+        const ProfilePage()
       ];
 
   @override

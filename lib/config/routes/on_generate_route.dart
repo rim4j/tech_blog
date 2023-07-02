@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/common/constants/page_const.dart';
+import 'package:tech_blog/common/widgets/main_wrapper.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/article/presentation/pages/article_list_page.dart';
 import 'package:tech_blog/features/article/presentation/pages/single_article_page.dart';
+import 'package:tech_blog/features/auth/presentation/pages/register_page.dart';
 
 class OnGenerateRoute {
   static Route<dynamic>? route(RouteSettings settings) {
@@ -41,6 +43,12 @@ class OnGenerateRoute {
         } else {
           return routeBuilder(const NoScreenFound());
         }
+
+      case PageConst.mainWrapperPage:
+        return routeBuilder(const MainWrapper());
+
+      case PageConst.registerPage:
+        return routeBuilder(const RegisterPage());
 
       default:
         return routeBuilder(const NoScreenFound());

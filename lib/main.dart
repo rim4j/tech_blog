@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tech_blog/common/bloc/bottom_nav_cubit.dart';
-import 'package:tech_blog/common/widgets/main_wrapper.dart';
 import 'package:tech_blog/config/theme/dark_theme.dart';
 import 'package:tech_blog/config/theme/light_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tech_blog/features/intro/presentation/pages/splash_page.dart';
 
 import 'config/routes/on_generate_route.dart';
 import 'locator.dart';
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       ],
       routes: {
         "/": (context) {
-          return MainWrapper();
+          return const SplashPage();
         }
       },
     );

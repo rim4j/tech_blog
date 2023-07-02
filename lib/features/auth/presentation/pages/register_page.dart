@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
+import 'package:tech_blog/common/constants/page_const.dart';
 import 'package:tech_blog/common/params/verify_user_params.dart';
 import 'package:tech_blog/common/utils/custom_snackbar.dart';
 import 'package:tech_blog/common/widgets/custom_button.dart';
@@ -30,8 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
     var textTheme = Theme.of(context).textTheme;
     var size = MediaQuery.of(context).size;
 
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ],
         ),
       ),
-    ));
+    );
   }
 
   Future<dynamic> _showEmailBottomSheet(
@@ -226,6 +226,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             CustomSnackBars.showSnackError(
                                 context, registerFailed.message);
+                          }
+                          if (authState.verifyUserStatus is VerifyUserSuccess) {
+                            CustomSnackBars.showSnackSuccess(
+                                context, MyStrings.successfulRegistration);
+                            Navigator.pop(context);
+                            _emailController.clear();
+                            _verifyCodeController.clear();
+                            Navigator.pushReplacementNamed(
+                                context, PageConst.mainWrapperPage);
                           }
                         },
                         builder: (context, authState) {

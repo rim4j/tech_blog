@@ -6,4 +6,8 @@ abstract class AuthRepository {
   Future<DataState<Map<String, dynamic>>> verifyUserRegister(
     VerifyUserParams params,
   );
+
+  Future<void> saveToken(String token);
+  Future<void> saveUserId(String userId);
+  Future<bool> isAuthenticated();
 }

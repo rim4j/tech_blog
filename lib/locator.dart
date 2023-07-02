@@ -6,11 +6,16 @@ import 'package:tech_blog/features/article/domain/repositories/article_repositor
 import 'package:tech_blog/features/article/domain/usecases/get_article_list_usecase.dart';
 import 'package:tech_blog/features/article/domain/usecases/get_article_list_with_id_usecase.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
+import 'package:tech_blog/features/auth/data/data_sources/local/auth_local_data_source.dart';
+import 'package:tech_blog/features/auth/data/data_sources/local/auth_local_data_source_impl.dart';
 import 'package:tech_blog/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
 import 'package:tech_blog/features/auth/data/data_sources/remote/auth_remote_data_source_impl.dart';
 import 'package:tech_blog/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:tech_blog/features/auth/domain/repositories/auth_repository.dart';
+import 'package:tech_blog/features/auth/domain/usecases/is_auth_usecase.dart';
 import 'package:tech_blog/features/auth/domain/usecases/register_usecase.dart';
+import 'package:tech_blog/features/auth/domain/usecases/save_token_usecase.dart';
+import 'package:tech_blog/features/auth/domain/usecases/save_user_id_usecase.dart';
 import 'package:tech_blog/features/auth/domain/usecases/verify_user_usecase.dart';
 import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source.dart';
@@ -31,6 +36,7 @@ Future<void> setup() async {
       ArticleRemoteDataSourceImpl());
 
   locator.registerSingleton<AuthRemoteDataSource>(AuthRemoteDataSourceImpl());
+  locator.registerSingleton<AuthLocalDataSource>(AuthLocalDataSourceImpl());
 
   //!repositories
   locator.registerSingleton<HomeRepository>(
@@ -41,7 +47,11 @@ Future<void> setup() async {
       ArticleRepositoryImpl(articleRemoteDataSource: locator()));
 
   locator.registerSingleton<AuthRepository>(
-      AuthRepositoryImpl(authRemoteDataSource: locator()));
+    AuthRepositoryImpl(
+      authRemoteDataSource: locator(),
+      authLocalDataSource: locator(),
+    ),
+  );
 
   //!useCases
   locator.registerSingleton<GetHomeItemsUseCase>(
@@ -62,6 +72,15 @@ Future<void> setup() async {
   locator.registerSingleton<VerifyUserUseCase>(
       VerifyUserUseCase(authRepository: locator()));
 
+  locator.registerSingleton<SaveTokenUseCase>(
+      SaveTokenUseCase(authRepository: locator()));
+
+  locator.registerSingleton<SaveUserIdUseCase>(
+      SaveUserIdUseCase(authRepository: locator()));
+
+  locator.registerSingleton<IsAuthUseCase>(
+      IsAuthUseCase(authRepository: locator()));
+
   //!state management
   locator.registerSingleton<HomeBloc>(
     HomeBloc(
@@ -77,6 +96,11 @@ Future<void> setup() async {
   );
 
   locator.registerSingleton<AuthBloc>(
-    AuthBloc(registerUseCase: locator(), verifyUserUseCase: locator()),
+    AuthBloc(
+      registerUseCase: locator(),
+      verifyUserUseCase: locator(),
+      saveTokenUseCase: locator(),
+      saveUserIdUseCase: locator(),
+    ),
   );
 }

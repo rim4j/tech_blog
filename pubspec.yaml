@@ -46,6 +46,8 @@ dependencies:
   flutter_localization: ^0.1.12
   flutter_svg: ^2.0.7
   top_snackbar_flutter: ^3.0.0+1
+  flutter_secure_storage: ^8.0.0
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:
