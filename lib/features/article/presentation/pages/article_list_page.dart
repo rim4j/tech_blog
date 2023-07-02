@@ -48,7 +48,7 @@ class ArticleListPage extends StatelessWidget {
           onTap: () {
             Navigator.restorablePushNamedAndRemoveUntil(
               context,
-              "/",
+              PageConst.mainWrapperPage,
               (route) => false,
             );
           },
