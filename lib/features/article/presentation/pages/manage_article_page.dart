@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
@@ -29,14 +30,17 @@ class _ManageArticlePageState extends State<ManageArticlePage> {
 
     userId.then((value) {
       BlocProvider.of<ArticleBloc>(context)
-          .add(LoadArticlePublishedByMe(userId: value));
+          .add(LoadArticlePublishedByMe(userId: "1"));
     });
   }
+
+  bool _showFab = true;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
+    const duration = Duration(milliseconds: 300);
     return Scaffold(
       //!app bar
       appBar: AppBarArticle(
@@ -48,83 +52,104 @@ class _ManageArticlePageState extends State<ManageArticlePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
 
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text(
-          MyStrings.textManageArticle,
-          style: textTheme.displayMedium,
+      floatingActionButton: AnimatedSlide(
+        duration: duration,
+        offset: _showFab ? Offset.zero : Offset(0, 2),
+        child: AnimatedOpacity(
+          duration: duration,
+          opacity: _showFab ? 1 : 0,
+          child: FloatingActionButton.extended(
+            label: Text(
+              MyStrings.textManageArticle,
+              style: textTheme.displayMedium,
+            ),
+            onPressed: () {},
+          ),
         ),
-        onPressed: () {},
       ),
-      body: BlocBuilder<ArticleBloc, ArticleState>(
-        builder: (context, articleState) {
-          final currentState = articleState.articlePublishedByMeStatus;
+      body: NotificationListener<UserScrollNotification>(
+        onNotification: (notification) {
+          final ScrollDirection direction = notification.direction;
+          setState(() {
+            if (direction == ScrollDirection.reverse) {
+              _showFab = false;
+            } else if (direction == ScrollDirection.forward) {
+              _showFab = true;
+            }
+          });
+          return true;
+        },
+        child: BlocBuilder<ArticleBloc, ArticleState>(
+          builder: (context, articleState) {
+            final currentState = articleState.articlePublishedByMeStatus;
 
-          if (currentState is ArticlePublishedByMeLoading) {
-            return const ArticlePageLoading();
-          }
+            if (currentState is ArticlePublishedByMeLoading) {
+              return const ArticlePageLoading();
+            }
 
-          //success
-          if (currentState is ArticlePublishedByMeCompleted) {
-            final List<ArticleEntity> articlePublishedByMe =
-                currentState.publishedByMe;
+            //success
+            if (currentState is ArticlePublishedByMeCompleted) {
+              final List<ArticleEntity> articlePublishedByMe =
+                  currentState.publishedByMe;
 
-            if (articlePublishedByMe.isEmpty) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  EmptyWidget(
-                      message: MyStrings.articleEmpty, textTheme: textTheme),
-                ],
+              if (articlePublishedByMe.isEmpty) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    EmptyWidget(
+                        message: MyStrings.articleEmpty, textTheme: textTheme),
+                  ],
+                );
+              }
+
+              return ListView.builder(
+                itemCount: articlePublishedByMe.length,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final articleItem = articlePublishedByMe[index];
+
+                  return ArticleHorizontalItem(
+                    articleItem: articleItem,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        PageConst.singleArticlePage,
+                        arguments: articleItem.id,
+                      );
+                    },
+                    size: size,
+                    textTheme: textTheme,
+                  );
+                },
               );
             }
 
-            return ListView.builder(
-              itemCount: articlePublishedByMe.length,
-              scrollDirection: Axis.vertical,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                final articleItem = articlePublishedByMe[index];
+            //!error
+            if (currentState is ArticlePublishedByMeError) {
+              // final error = currentState.message;
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      MyStrings.apiError,
+                      style: textTheme.titleSmall,
+                    ),
+                    SizedBox(height: Dimens.xLarge),
+                    Image.asset(
+                      Images.empty,
+                      width: 200,
+                    )
+                  ],
+                ),
+              );
+            }
 
-                return ArticleHorizontalItem(
-                  articleItem: articleItem,
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      PageConst.singleArticlePage,
-                      arguments: articleItem.id,
-                    );
-                  },
-                  size: size,
-                  textTheme: textTheme,
-                );
-              },
-            );
-          }
-
-          //!error
-          if (currentState is ArticlePublishedByMeError) {
-            // final error = currentState.message;
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    MyStrings.apiError,
-                    style: textTheme.titleSmall,
-                  ),
-                  SizedBox(height: Dimens.xLarge),
-                  Image.asset(
-                    Images.empty,
-                    width: 200,
-                  )
-                ],
-              ),
-            );
-          }
-
-          //!default
-          return Container();
-        },
+            //!default
+            return Container();
+          },
+        ),
       ),
     );
   }
