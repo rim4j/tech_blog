@@ -69,6 +69,8 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
                         SizedBox(
                           height: height / 3,
                           child: CachedNetworkImage(
+                            memCacheWidth: 200,
+                            memCacheHeight: 200,
                             imageUrl: singleArticleInfo.image!,
                             imageBuilder: ((context, imageProvider) => Image(
                                   image: imageProvider,

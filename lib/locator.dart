@@ -5,6 +5,7 @@ import 'package:tech_blog/features/article/data/repositories/article_repository_
 import 'package:tech_blog/features/article/domain/repositories/article_repository.dart';
 import 'package:tech_blog/features/article/domain/usecases/get_article_list_usecase.dart';
 import 'package:tech_blog/features/article/domain/usecases/get_article_list_with_id_usecase.dart';
+import 'package:tech_blog/features/article/domain/usecases/get_article_published_by_me_usecase.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/auth/data/data_sources/local/auth_local_data_source.dart';
 import 'package:tech_blog/features/auth/data/data_sources/local/auth_local_data_source_impl.dart';
@@ -64,6 +65,8 @@ Future<void> setup() async {
   locator.registerSingleton<GetHomeItemsUseCase>(
       GetHomeItemsUseCase(homeRepository: locator()));
 
+  //article usee cases
+
   locator.registerSingleton<GetSingleArticleUseCase>(
       GetSingleArticleUseCase(articleRepository: locator()));
 
@@ -72,6 +75,9 @@ Future<void> setup() async {
 
   locator.registerSingleton<GetArticleListWithIdUseCase>(
       GetArticleListWithIdUseCase(articleRepository: locator()));
+
+  locator.registerSingleton<GetArticlePublishedByMeUseCase>(
+      GetArticlePublishedByMeUseCase(articleRepository: locator()));
 
   locator.registerSingleton<RegisterUseCase>(
       RegisterUseCase(authRepository: locator()));
@@ -101,9 +107,11 @@ Future<void> setup() async {
 
   locator.registerSingleton<ArticleBloc>(
     ArticleBloc(
-        getSingleArticleUseCase: locator(),
-        getArticleListUseCase: locator(),
-        getArticleListWithIdUseCase: locator()),
+      getSingleArticleUseCase: locator(),
+      getArticleListUseCase: locator(),
+      getArticleListWithIdUseCase: locator(),
+      getArticlePublishedByMeUseCase: locator(),
+    ),
   );
 
   locator.registerSingleton<AuthBloc>(

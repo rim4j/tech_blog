@@ -97,4 +97,26 @@ class ArticleRepositoryImpl implements ArticleRepository {
       return const DataFailed("please check your connection");
     }
   }
+
+  @override
+  Future<DataState<List<ArticleEntity>>> fetchArticlePublishedByMe(
+      String userId) async {
+    try {
+      Response response =
+          await articleRemoteDataSource.fetchArticlesPublishedByMe(userId);
+
+      if (response.statusCode == 200) {
+        List<ArticleEntity> articlePublishedByMe = [];
+
+        response.data.forEach(
+            (item) => articlePublishedByMe.add(ArticleModel.fromJson(item)));
+
+        return DataSuccess(articlePublishedByMe);
+      } else {
+        return const DataFailed("something went wrong please try again later");
+      }
+    } catch (e) {
+      return const DataFailed("please check your connection");
+    }
+  }
 }

@@ -19,3 +19,11 @@ class LoadArticleListWithIdEvent extends ArticleEvent {
     required this.id,
   });
 }
+
+class LoadArticlePublishedByMe extends ArticleEvent {
+  String userId;
+
+  LoadArticlePublishedByMe({
+    required this.userId,
+  });
+}

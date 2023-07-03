@@ -5,4 +5,6 @@ abstract class ArticleRepository {
   Future<DataState<Map<String, dynamic>>> fetchInfoArticle(String id);
   Future<DataState<List<ArticleEntity>>> fetchArticleList();
   Future<DataState<List<ArticleEntity>>> fetchArticleListWithId(String id);
+  Future<DataState<List<ArticleEntity>>> fetchArticlePublishedByMe(
+      String userId);
 }
