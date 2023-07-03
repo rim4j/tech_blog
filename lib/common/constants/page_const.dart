@@ -4,4 +4,5 @@ class PageConst {
   static const articleListPage = "articleListPage";
   static const mainWrapperPage = "mainWrapperPage";
   static const registerPage = "registerPage";
+  static const manageArticlePage = "manageArticlePage";
 }

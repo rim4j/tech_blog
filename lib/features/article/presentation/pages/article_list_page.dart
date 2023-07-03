@@ -4,10 +4,10 @@ import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/common/constants/page_const.dart';
-import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_list_status.dart';
+import 'package:tech_blog/features/article/presentation/widgets/app_bar_article.dart';
 import 'package:tech_blog/features/article/presentation/widgets/article_horizontal_item.dart';
 import 'package:tech_blog/features/article/presentation/widgets/article_page_loading.dart';
 
@@ -26,45 +26,15 @@ class ArticleListPage extends StatelessWidget {
 
     return Scaffold(
       //!app bar
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Center(
-                child: Text(
-              title,
-              style: const TextStyle(
-                fontFamily: 'dana',
-                fontSize: 17,
-                color: AppColors.primaryColor,
-                fontWeight: FontWeight.w300,
-              ),
-            )),
-          ),
-        ],
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.restorablePushNamedAndRemoveUntil(
-              context,
-              PageConst.mainWrapperPage,
-              (route) => false,
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Container(
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor.withBlue(100),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.keyboard_arrow_right_rounded),
-            ),
-          ),
-        ),
+      appBar: AppBarArticle(
+        title: title,
+        backButton: () {
+          Navigator.restorablePushNamedAndRemoveUntil(
+            context,
+            PageConst.mainWrapperPage,
+            (route) => false,
+          );
+        },
       ),
 
       //!body

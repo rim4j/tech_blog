@@ -22,10 +22,10 @@ class FormContainerWidget extends StatefulWidget {
   });
 
   @override
-  _FormContainerWidgetState createState() => _FormContainerWidgetState();
+  FormContainerWidgetState createState() => FormContainerWidgetState();
 }
 
-class _FormContainerWidgetState extends State<FormContainerWidget> {
+class FormContainerWidgetState extends State<FormContainerWidget> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;

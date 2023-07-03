@@ -263,7 +263,7 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
           }
 
           if (homeState.singleArticleStatus is SingleArticleError) {
-            return Center(
+            return const Center(
               child: Text("error"),
             );
           }

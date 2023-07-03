@@ -143,7 +143,7 @@ class BottomNavCurvePainter extends CustomPainter {
     );
 
     path.arcToPoint(Offset(insetCurveEndX, insetRadius / 2),
-        radius: Radius.circular(10.0), clockwise: false);
+        radius: const Radius.circular(10.0), clockwise: false);
 
     path.quadraticBezierTo(
         insetCurveEndX, 0, insetCurveEndX + transitionToInsetCurveWidth, 0);

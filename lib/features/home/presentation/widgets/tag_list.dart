@@ -37,7 +37,6 @@ class TagList extends StatelessWidget {
 
                 Navigator.pushNamed(context, PageConst.articleListPage,
                     arguments: tag.title);
-                print(tag.id);
               },
               tag: tag,
               textTheme: textTheme,

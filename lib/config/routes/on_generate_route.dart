@@ -4,6 +4,7 @@ import 'package:tech_blog/common/constants/page_const.dart';
 import 'package:tech_blog/common/widgets/main_wrapper.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/article/presentation/pages/article_list_page.dart';
+import 'package:tech_blog/features/article/presentation/pages/manage_article_page.dart';
 import 'package:tech_blog/features/article/presentation/pages/single_article_page.dart';
 import 'package:tech_blog/features/auth/presentation/pages/register_page.dart';
 
@@ -12,24 +13,6 @@ class OnGenerateRoute {
     final args = settings.arguments;
 
     switch (settings.name) {
-      // case PageConst.signIn:
-      //   return routeBuilder(const SignInPage());
-
-      // case PageConst.signUp:
-      //   return routeBuilder(const SignUpPage());
-
-      // case PageConst.forgetPassword:
-      //   return routeBuilder(const ForgetPasswordPage());
-
-      // case PageConst.createGroup:
-      //   if (args is String) {
-      //     return routeBuilder(CreateGroupPage(
-      //       uid: args,
-      //     ));
-      //   } else {
-      //     return routeBuilder(const NoScreenFound());
-      //   }
-
       case PageConst.singleArticlePage:
         if (args is String) {
           return routeBuilder(SingleArticlePage(id: args));
@@ -49,6 +32,9 @@ class OnGenerateRoute {
 
       case PageConst.registerPage:
         return routeBuilder(const RegisterPage());
+
+      case PageConst.manageArticlePage:
+        return routeBuilder(const ManageArticlePage());
 
       default:
         return routeBuilder(const NoScreenFound());
