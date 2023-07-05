@@ -4,6 +4,7 @@ import 'package:tech_blog/common/constants/page_const.dart';
 import 'package:tech_blog/common/widgets/main_wrapper.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/article/presentation/pages/article_list_page.dart';
+import 'package:tech_blog/features/article/presentation/pages/create_article_page.dart';
 import 'package:tech_blog/features/article/presentation/pages/manage_article_page.dart';
 import 'package:tech_blog/features/article/presentation/pages/single_article_page.dart';
 import 'package:tech_blog/features/auth/presentation/pages/register_page.dart';
@@ -35,6 +36,9 @@ class OnGenerateRoute {
 
       case PageConst.manageArticlePage:
         return routeBuilder(const ManageArticlePage());
+
+      case PageConst.createArticlePage:
+        return routeBuilder(const CreateArticlePage());
 
       default:
         return routeBuilder(const NoScreenFound());

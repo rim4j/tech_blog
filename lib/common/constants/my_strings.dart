@@ -38,10 +38,10 @@ www.sasansafari.com
 لطفا اطلاعات ثبت نام رو کامل کن
 """;
 
-  static String titltArrticle =
+  static String titleArticle =
       'اینجا عنوان مقاله قرار میگیره ، یه عنوان جذاب انتخاب کن';
 
-  static String editOrginalTextArticle = """
+  static String editOriginalTextArticle = """
 من متن و بدنه اصلی مقاله هستم ، اگه میخوای من رو ویرایش کنی و یه مقاله جذاب بنویسی ، نوشته آبی رنگ بالا که نوشته "ویرایش متن اصلی مقاله" رو با انگشتت لمس کن تا وارد ویرایشگر بشی""";
 
   static String visit = 'بازدید';
@@ -76,6 +76,11 @@ www.sasansafari.com
 
   static const nothing = "هیج مقاله ای در این زمینه منتشر نشده است!!!";
   static const apiError = "مشکلی در سرور بوجود امده است لطفا بعدا تلاش کنید!!!";
+  static const deleteContentArticle = "پاک کردن متن";
+  static const selectImageError = "لطفا تصویر مقاله را انتخاب کنید";
+  static const selectTitleError = "لطفا عنوان مقاله را بنویسید";
+  static const selectContentError = "لطفا متن مقاله را بنویسید";
+  static const selecCategoryError = "لطفا دسته بندی مقاله را انتخاب کنید";
 
   static String nameFatemeAmiri = "فاطمه امیری";
   static String notFound = "صفحه ای یافت نشد!!!";

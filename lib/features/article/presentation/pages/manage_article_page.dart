@@ -30,7 +30,7 @@ class _ManageArticlePageState extends State<ManageArticlePage> {
 
     userId.then((value) {
       BlocProvider.of<ArticleBloc>(context)
-          .add(LoadArticlePublishedByMe(userId: "1"));
+          .add(LoadArticlePublishedByMe(userId: "4"));
     });
   }
 
@@ -54,16 +54,19 @@ class _ManageArticlePageState extends State<ManageArticlePage> {
 
       floatingActionButton: AnimatedSlide(
         duration: duration,
-        offset: _showFab ? Offset.zero : Offset(0, 2),
+        offset: _showFab ? Offset.zero : const Offset(0, 2),
         child: AnimatedOpacity(
           duration: duration,
           opacity: _showFab ? 1 : 0,
           child: FloatingActionButton.extended(
+            // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             label: Text(
               MyStrings.textManageArticle,
               style: textTheme.displayMedium,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, PageConst.createArticlePage);
+            },
           ),
         ),
       ),

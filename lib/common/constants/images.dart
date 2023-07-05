@@ -3,6 +3,7 @@ class Images {
   static const profile = 'assets/images/profileAvatar.png';
   static const empty = 'assets/images/empty_state.png';
   static const tcBot = 'assets/images/tcbot.svg';
+  static const placeHolder = 'assets/images/single_place_holder.jpg';
 }
 
 class ICONS {

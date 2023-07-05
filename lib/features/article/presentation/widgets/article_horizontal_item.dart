@@ -23,15 +23,8 @@ class ArticleHorizontalItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
-      // onTap: () {
-      //   Navigator.pushNamed(
-      //     context,
-      //     PageConst.singleArticlePage,
-      //     arguments: articleItem.id,
-      //   );
-      // },
       child: Padding(
         padding: EdgeInsets.all(Dimens.small),
         child: Row(
