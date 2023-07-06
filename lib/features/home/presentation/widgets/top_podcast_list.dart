@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_blog/common/constants/page_const.dart';
 import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
 import 'package:tech_blog/features/home/presentation/widgets/top_podcast_item.dart';
 
@@ -26,6 +27,7 @@ class TopPodcastList extends StatelessWidget {
             final topPodcastItem = topPodcasts[index];
             return TopPodcastItem(
               onTap: () {
+                Navigator.pushNamed(context, PageConst.singlePodcastPage);
                 print(topPodcastItem.id);
               },
               bodyMargin: bodyMargin,

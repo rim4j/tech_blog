@@ -8,6 +8,7 @@ import 'package:tech_blog/features/article/presentation/pages/create_article_pag
 import 'package:tech_blog/features/article/presentation/pages/manage_article_page.dart';
 import 'package:tech_blog/features/article/presentation/pages/single_article_page.dart';
 import 'package:tech_blog/features/auth/presentation/pages/register_page.dart';
+import 'package:tech_blog/features/podcast/presentation/pages/single_podcast_page.dart';
 
 class OnGenerateRoute {
   static Route<dynamic>? route(RouteSettings settings) {
@@ -39,6 +40,9 @@ class OnGenerateRoute {
 
       case PageConst.createArticlePage:
         return routeBuilder(const CreateArticlePage());
+
+      case PageConst.singlePodcastPage:
+        return routeBuilder(const SinglePodcastPage());
 
       default:
         return routeBuilder(const NoScreenFound());

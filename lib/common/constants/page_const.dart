@@ -6,4 +6,5 @@ class PageConst {
   static const registerPage = "registerPage";
   static const manageArticlePage = "manageArticlePage";
   static const createArticlePage = "createArticlePage";
+  static const singlePodcastPage = "singlePodcastPage";
 }

@@ -98,6 +98,7 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
         print(_titleController.text);
         print(_contentController.text);
         print(selectedCatName);
+        print(selectedCatId);
       }
     }
 

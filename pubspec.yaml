@@ -49,6 +49,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   jwt_decoder: ^2.0.1
   file_picker: ^5.3.2
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
