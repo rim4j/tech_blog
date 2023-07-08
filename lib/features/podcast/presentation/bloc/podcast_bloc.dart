@@ -26,7 +26,6 @@ class PodcastBloc extends Bloc<PodcastEvent, PodcastState> {
     DataState dataState = await getSinglePodcastUseCase(event.id);
 
     if (dataState is DataSuccess) {
-      print(dataState.data);
       emit(
         state.copyWith(
           newSinglePodcastStatus: SinglePodcastCompleted(
@@ -38,8 +37,6 @@ class PodcastBloc extends Bloc<PodcastEvent, PodcastState> {
     }
 
     if (dataState is DataFailed) {
-      print(dataState.data);
-
       emit(
         state.copyWith(
           newSinglePodcastStatus: SinglePodcastError(message: dataState.error!),
