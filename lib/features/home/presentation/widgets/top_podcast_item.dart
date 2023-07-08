@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
-import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
+import 'package:tech_blog/features/podcast/domain/entities/podcast_entity.dart';
 
 class TopPodcastItem extends StatelessWidget {
   const TopPodcastItem({

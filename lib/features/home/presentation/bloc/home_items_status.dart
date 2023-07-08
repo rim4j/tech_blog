@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
-import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/poster_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/tag_entity.dart';
+import 'package:tech_blog/features/podcast/domain/entities/podcast_entity.dart';
 
 @immutable
 abstract class HomeItemsStatus {}

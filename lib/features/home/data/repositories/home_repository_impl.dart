@@ -2,13 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:tech_blog/common/resources/data_state.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source.dart';
 import 'package:tech_blog/features/article/data/models/article_model.dart';
-import 'package:tech_blog/features/home/data/models/podcast_model.dart';
 import 'package:tech_blog/features/home/data/models/poster_model.dart';
 import 'package:tech_blog/features/home/data/models/tag_model.dart';
 import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
-import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/tag_entity.dart';
 import 'package:tech_blog/features/home/domain/repositories/home_repository.dart';
+import 'package:tech_blog/features/podcast/data/models/podcast_model.dart';
+import 'package:tech_blog/features/podcast/domain/entities/podcast_entity.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDataSource homeRemoteDataSource;

@@ -42,7 +42,11 @@ class OnGenerateRoute {
         return routeBuilder(const CreateArticlePage());
 
       case PageConst.singlePodcastPage:
-        return routeBuilder(const SinglePodcastPage());
+        if (args is String) {
+          return routeBuilder(SinglePodcastPage(id: args));
+        } else {
+          return routeBuilder(const NoScreenFound());
+        }
 
       default:
         return routeBuilder(const NoScreenFound());

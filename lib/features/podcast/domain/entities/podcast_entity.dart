@@ -9,12 +9,12 @@ class PodcastEntity extends Equatable {
   final String? createdAt;
 
   const PodcastEntity({
-    this.id,
-    this.title,
-    this.poster,
-    this.publisher,
-    this.view,
-    this.createdAt,
+    required this.id,
+    required this.title,
+    required this.poster,
+    required this.publisher,
+    required this.view,
+    required this.createdAt,
   });
 
   @override

@@ -1,5 +1,5 @@
 import 'package:tech_blog/common/constants/api_constants.dart';
-import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
+import 'package:tech_blog/features/podcast/domain/entities/podcast_entity.dart';
 
 class PodcastModel extends PodcastEntity {
   const PodcastModel({

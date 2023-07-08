@@ -8,7 +8,6 @@ import 'package:tech_blog/common/widgets/see_more_widget.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
-import 'package:tech_blog/features/home/domain/entities/podcast_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/poster_entity.dart';
 import 'package:tech_blog/features/home/domain/entities/tag_entity.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
@@ -18,6 +17,7 @@ import 'package:tech_blog/features/home/presentation/widgets/poster_widget.dart'
 import 'package:tech_blog/features/home/presentation/widgets/tag_list.dart';
 import 'package:tech_blog/features/home/presentation/widgets/top_podcast_list.dart';
 import 'package:tech_blog/features/home/presentation/widgets/top_visited_list.dart';
+import 'package:tech_blog/features/podcast/domain/entities/podcast_entity.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

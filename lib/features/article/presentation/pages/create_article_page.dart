@@ -83,16 +83,20 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
 
     postArticle() {
       if (_image == null) {
-        CustomSnackBars.showSnackError(context, MyStrings.selectImageError);
+        return CustomSnackBars.showSnackError(
+            context, MyStrings.selectImageError);
       }
       if (_titleController.text == "") {
-        CustomSnackBars.showSnackError(context, MyStrings.selectTitleError);
+        return CustomSnackBars.showSnackError(
+            context, MyStrings.selectTitleError);
       }
       if (_contentController.text == "") {
-        CustomSnackBars.showSnackError(context, MyStrings.selectContentError);
+        return CustomSnackBars.showSnackError(
+            context, MyStrings.selectContentError);
       }
       if (selectedCatName == "") {
-        CustomSnackBars.showSnackError(context, MyStrings.selecCategoryError);
+        return CustomSnackBars.showSnackError(
+            context, MyStrings.selecCategoryError);
       } else {
         print(_image);
         print(_titleController.text);

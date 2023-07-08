@@ -29,6 +29,12 @@ import 'package:tech_blog/features/intro/data/repositories/intro_repository_impl
 import 'package:tech_blog/features/intro/domain/repositories/intro_repository.dart';
 import 'package:tech_blog/features/intro/domain/usecases/check_connection_usecase.dart';
 import 'package:tech_blog/features/intro/presentation/bloc/intro_bloc.dart';
+import 'package:tech_blog/features/podcast/data/data_sources/remote/podcast_remote_data_source.dart';
+import 'package:tech_blog/features/podcast/data/data_sources/remote/podcast_remote_data_source_impl.dart';
+import 'package:tech_blog/features/podcast/data/repositories/podcast_repository_impl.dart';
+import 'package:tech_blog/features/podcast/domain/repositories/podcast_repository.dart';
+import 'package:tech_blog/features/podcast/domain/usecases/get_single_podcast_usecase.dart';
+import 'package:tech_blog/features/podcast/presentation/bloc/podcast_bloc.dart';
 
 import 'features/article/domain/usecases/get_single_article_usecase.dart';
 
@@ -42,15 +48,20 @@ Future<void> setup() async {
 
   locator.registerSingleton<AuthRemoteDataSource>(AuthRemoteDataSourceImpl());
   locator.registerSingleton<AuthLocalDataSource>(AuthLocalDataSourceImpl());
+  locator.registerSingleton<PodcastRemoteDataSource>(
+      PodcastRemoteDataSourceImpl());
 
   //!repositories
+  //home
   locator.registerSingleton<HomeRepository>(
     HomeRepositoryImpl(homeRemoteDataSource: locator()),
   );
 
+  //article
   locator.registerSingleton<ArticleRepository>(
       ArticleRepositoryImpl(articleRemoteDataSource: locator()));
 
+  //auth
   locator.registerSingleton<AuthRepository>(
     AuthRepositoryImpl(
       authRemoteDataSource: locator(),
@@ -58,14 +69,18 @@ Future<void> setup() async {
     ),
   );
 
-  //intro  repository
+  //intro
   locator.registerSingleton<IntroRepository>(IntroRepositoryImpl());
+
+  //podcast
+  locator.registerSingleton<PodcastRepository>(
+      PodcastRepositoryImpl(podcastRemoteDataSource: locator()));
 
   //!useCases
   locator.registerSingleton<GetHomeItemsUseCase>(
       GetHomeItemsUseCase(homeRepository: locator()));
 
-  //article usee cases
+  //article
 
   locator.registerSingleton<GetSingleArticleUseCase>(
       GetSingleArticleUseCase(articleRepository: locator()));
@@ -78,6 +93,8 @@ Future<void> setup() async {
 
   locator.registerSingleton<GetArticlePublishedByMeUseCase>(
       GetArticlePublishedByMeUseCase(articleRepository: locator()));
+
+  //auth
 
   locator.registerSingleton<RegisterUseCase>(
       RegisterUseCase(authRepository: locator()));
@@ -94,17 +111,23 @@ Future<void> setup() async {
   locator.registerSingleton<IsAuthUseCase>(
       IsAuthUseCase(authRepository: locator()));
 
-  //intro usecase
+  //intro
   locator.registerSingleton<CheckConnectionUseCase>(
       CheckConnectionUseCase(introRepository: locator()));
 
+  //podcast
+  locator.registerSingleton<GetSinglePodcastUseCase>(
+      GetSinglePodcastUseCase(podcastRepository: locator()));
+
   //!state management
+  //home
   locator.registerSingleton<HomeBloc>(
     HomeBloc(
       getHomeItemsUseCase: locator(),
     ),
   );
 
+  //article
   locator.registerSingleton<ArticleBloc>(
     ArticleBloc(
       getSingleArticleUseCase: locator(),
@@ -122,7 +145,14 @@ Future<void> setup() async {
       saveUserIdUseCase: locator(),
     ),
   );
-  //intro bloc
+  //intro
   locator.registerSingleton<IntroBloc>(
       IntroBloc(checkConnectionUseCase: locator()));
+
+  //podcast
+  locator.registerSingleton<PodcastBloc>(
+    PodcastBloc(
+      getSinglePodcastUseCase: locator(),
+    ),
+  );
 }
