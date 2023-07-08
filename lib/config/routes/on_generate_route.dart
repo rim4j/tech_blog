@@ -8,6 +8,7 @@ import 'package:tech_blog/features/article/presentation/pages/create_article_pag
 import 'package:tech_blog/features/article/presentation/pages/manage_article_page.dart';
 import 'package:tech_blog/features/article/presentation/pages/single_article_page.dart';
 import 'package:tech_blog/features/auth/presentation/pages/register_page.dart';
+import 'package:tech_blog/features/podcast/domain/entities/podcast_entity.dart';
 import 'package:tech_blog/features/podcast/presentation/pages/single_podcast_page.dart';
 
 class OnGenerateRoute {
@@ -42,8 +43,10 @@ class OnGenerateRoute {
         return routeBuilder(const CreateArticlePage());
 
       case PageConst.singlePodcastPage:
-        if (args is String) {
-          return routeBuilder(SinglePodcastPage(id: args));
+        if (args is PodcastEntity) {
+          return routeBuilder(SinglePodcastPage(
+            podcast: args,
+          ));
         } else {
           return routeBuilder(const NoScreenFound());
         }

@@ -6,16 +6,19 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
+import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/config/theme/app_colors.dart';
+import 'package:tech_blog/features/podcast/domain/entities/podcast_entity.dart';
+import 'package:tech_blog/features/podcast/domain/entities/podcast_file_entity.dart';
 import 'package:tech_blog/features/podcast/presentation/bloc/podcast_bloc.dart';
 import 'package:tech_blog/features/podcast/presentation/bloc/single_podcast_status.dart';
 import 'package:tech_blog/features/podcast/presentation/widgets/single_podcast_page_loading.dart';
 
 class SinglePodcastPage extends StatefulWidget {
-  final String id;
+  final PodcastEntity podcast;
   const SinglePodcastPage({
     Key? key,
-    required this.id,
+    required this.podcast,
   }) : super(key: key);
 
   @override
@@ -26,7 +29,7 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
   @override
   void initState() {
     BlocProvider.of<PodcastBloc>(context)
-        .add(LoadSinglePodcastEvent(id: widget.id));
+        .add(LoadSinglePodcastEvent(id: widget.podcast.id!));
     super.initState();
   }
 
@@ -46,6 +49,11 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
             }
 
             if (podcastState.singlePodcastStatus is SinglePodcastCompleted) {
+              final SinglePodcastCompleted singlePodcastCompleted =
+                  podcastState.singlePodcastStatus as SinglePodcastCompleted;
+
+              final files = singlePodcastCompleted.files;
+
               return Stack(
                 children: [
                   Positioned(
@@ -63,12 +71,11 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                                 height: height / 3,
                                 width: double.infinity,
                                 child: CachedNetworkImage(
-                                  imageUrl:
-                                      "https://rachelcorbett.com.au/wp-content/uploads/2018/07/Neon-podcast-logo.jpg",
+                                  imageUrl: widget.podcast.poster!,
                                   imageBuilder: ((context, imageProvider) =>
                                       Image(
                                         image: imageProvider,
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.cover,
                                       )),
                                   placeholder: ((context, url) =>
                                       SpinKitFadingCube(
@@ -147,7 +154,7 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                "عنوان",
+                                widget.podcast.title!,
                                 maxLines: 2,
                                 textAlign: TextAlign.start,
                                 style: textTheme.titleLarge,
@@ -168,7 +175,9 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                                   width: Dimens.medium,
                                 ),
                                 Text(
-                                  "امیر جلالی",
+                                  widget.podcast.publisher! == ""
+                                      ? "ساسان صفری"
+                                      : widget.podcast.publisher!,
                                   style: textTheme.headlineMedium,
                                 ),
                                 SizedBox(
@@ -179,37 +188,48 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                           ),
 
                           //file list
+
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 5,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          ImageIcon(
-                                            Image.asset(ICONS.bluePen).image,
-                                            color: AppColors.seeMore,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            "فریلنسر دیوانه",
-                                            style: textTheme.headlineMedium,
-                                          ),
-                                        ],
-                                      ),
-                                      const Text("22:00")
-                                    ],
+                            child: files.isEmpty
+                                ? const Center(
+                                    child: Text(MyStrings.nothingPodcast),
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: files.length,
+                                    itemBuilder: (context, index) {
+                                      PodcastFileEntity file = files[index];
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                ImageIcon(
+                                                  Image.asset(ICONS.bluePen)
+                                                      .image,
+                                                  color: AppColors.seeMore,
+                                                ),
+                                                const SizedBox(width: 8),
+                                                SizedBox(
+                                                  width: width / 1.5,
+                                                  child: Text(
+                                                    file.title!,
+                                                    style: textTheme
+                                                        .headlineMedium,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Text("${file.length!}:00")
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
                           )
                         ],
                       ),

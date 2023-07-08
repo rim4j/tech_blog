@@ -28,7 +28,7 @@ class TopPodcastList extends StatelessWidget {
             return TopPodcastItem(
               onTap: () {
                 Navigator.pushNamed(context, PageConst.singlePodcastPage,
-                    arguments: topPodcastItem.id);
+                    arguments: topPodcastItem);
               },
               bodyMargin: bodyMargin,
               size: size,

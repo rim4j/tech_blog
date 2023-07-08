@@ -81,6 +81,7 @@ www.sasansafari.com
   static const selectTitleError = "لطفا عنوان مقاله را بنویسید";
   static const selectContentError = "لطفا متن مقاله را بنویسید";
   static const selecCategoryError = "لطفا دسته بندی مقاله را انتخاب کنید";
+  static const nothingPodcast = "هیچ پادکستی منتشر نشده است !";
 
   static String nameFatemeAmiri = "فاطمه امیری";
   static String notFound = "صفحه ای یافت نشد!!!";
