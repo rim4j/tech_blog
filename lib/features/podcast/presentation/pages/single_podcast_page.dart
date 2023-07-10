@@ -1,8 +1,9 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:just_audio/just_audio.dart';
 
 import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
@@ -16,6 +17,7 @@ import 'package:tech_blog/features/podcast/presentation/widgets/single_podcast_p
 
 class SinglePodcastPage extends StatefulWidget {
   final PodcastEntity podcast;
+
   const SinglePodcastPage({
     Key? key,
     required this.podcast,
@@ -26,11 +28,34 @@ class SinglePodcastPage extends StatefulWidget {
 }
 
 class _SinglePodcastPageState extends State<SinglePodcastPage> {
+  final AudioPlayer player = AudioPlayer();
+
+  late ConcatenatingAudioSource playList;
+  int currentIndexPodcast = 0;
+
+  void initPlayList() async {
+    await player.setAudioSource(
+      playList,
+      initialIndex: 0,
+      initialPosition: Duration.zero,
+    );
+  }
+
   @override
   void initState() {
     BlocProvider.of<PodcastBloc>(context)
         .add(LoadSinglePodcastEvent(id: widget.podcast.id!));
+    playList = ConcatenatingAudioSource(useLazyPreparation: true, children: []);
+
+    initPlayList();
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
   @override
@@ -42,7 +67,17 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<PodcastBloc, PodcastState>(
+        child: BlocConsumer<PodcastBloc, PodcastState>(
+          listener: (context, podcastState) {
+            if (podcastState.singlePodcastStatus is SinglePodcastCompleted) {
+              final SinglePodcastCompleted singlePodcastCompleted =
+                  podcastState.singlePodcastStatus as SinglePodcastCompleted;
+
+              singlePodcastCompleted.files.forEach((element) async {
+                await playList.add(AudioSource.uri(Uri.parse(element.file!)));
+              });
+            }
+          },
           builder: (context, podcastState) {
             if (podcastState.singlePodcastStatus is SinglePodcastLoading) {
               return const Center(child: SinglePodcastPageLoading());
@@ -110,7 +145,10 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                                         width: Dimens.medium + 4,
                                       ),
                                       GestureDetector(
-                                        onTap: (() => Navigator.pop(context)),
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          player.stop();
+                                        },
                                         child: Icon(
                                           Icons.arrow_back,
                                           color: AppColors.lightIcon,
@@ -132,7 +170,7 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                                         width: Dimens.medium + 4,
                                       ),
                                       GestureDetector(
-                                        onTap: () async {},
+                                        onTap: () {},
                                         child: Icon(
                                           Icons.share,
                                           size: Dimens.medium + 8,
@@ -200,32 +238,57 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                                     itemCount: files.length,
                                     itemBuilder: (context, index) {
                                       PodcastFileEntity file = files[index];
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                ImageIcon(
-                                                  Image.asset(ICONS.bluePen)
-                                                      .image,
-                                                  color: AppColors.seeMore,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                SizedBox(
-                                                  width: width / 1.5,
-                                                  child: Text(
-                                                    file.title!,
-                                                    style: textTheme
-                                                        .headlineMedium,
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            currentIndexPodcast = index;
+                                          });
+
+                                          player.setAudioSource(
+                                            playList,
+                                            initialIndex: currentIndexPodcast,
+                                            preload: false,
+                                          );
+
+                                          player.play();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  ImageIcon(
+                                                    Image.asset(ICONS.bluePen)
+                                                        .image,
+                                                    color: AppColors.seeMore,
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            Text("${file.length!}:00")
-                                          ],
+                                                  const SizedBox(width: 8),
+                                                  SizedBox(
+                                                    width: width / 1.5,
+                                                    child: Text(
+                                                      file.title!,
+                                                      style: currentIndexPodcast ==
+                                                              index
+                                                          ? textTheme
+                                                              .displaySmall
+                                                          : textTheme
+                                                              .headlineMedium,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Text(
+                                                "${file.length!}:00",
+                                                style: currentIndexPodcast ==
+                                                        index
+                                                    ? textTheme.displaySmall
+                                                    : textTheme.headlineMedium,
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       );
                                     },
@@ -235,53 +298,114 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                       ),
                     ),
                   ),
+
                   //player
-                  Positioned(
-                    bottom: 8,
-                    left: bodyMargin,
-                    right: bodyMargin,
-                    child: Container(
-                      height: height / 10,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                        gradient: LinearGradient(
-                          colors: GradientColors.bottomNav,
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          LinearPercentIndicator(
-                            percent: 1.0,
-                            backgroundColor: AppColors.scaffoldBg,
-                            progressColor: Colors.amber,
+
+                  StreamBuilder<Duration>(
+                    stream: player.positionStream,
+                    builder: (context, snapshot) {
+                      final position = snapshot.data;
+
+                      if (snapshot.hasData) {
+                        return Positioned(
+                          bottom: 8,
+                          left: bodyMargin,
+                          right: bodyMargin,
+                          child: Container(
+                            height: height / 10,
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18)),
+                              gradient: LinearGradient(
+                                colors: GradientColors.bottomNav,
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                //player indicator
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: ProgressBar(
+                                    timeLabelTextStyle:
+                                        const TextStyle(color: Colors.white),
+                                    thumbColor: Colors.amber,
+                                    progressBarColor: Colors.orange,
+                                    baseBarColor: Colors.white,
+                                    progress: position!,
+                                    buffered: player.bufferedPosition,
+                                    total: player.duration ??
+                                        const Duration(seconds: 0),
+                                    onSeek: (duration) {
+                                      player.seek(duration);
+                                    },
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        player.seekToNext();
+
+                                        if (files.length - 1 !=
+                                            currentIndexPodcast) {
+                                          setState(() {
+                                            currentIndexPodcast =
+                                                currentIndexPodcast + 1;
+                                          });
+                                        }
+                                      },
+                                      child: const Icon(
+                                        Icons.skip_next,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        player.playing
+                                            ? player.stop()
+                                            : player.play();
+                                      },
+                                      child: Icon(
+                                        player.playing
+                                            ? Icons.pause
+                                            : Icons.play_circle_fill,
+                                        size: 50,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        player.seekToPrevious();
+                                        if (currentIndexPodcast != 0) {
+                                          setState(() {
+                                            currentIndexPodcast =
+                                                currentIndexPodcast - 1;
+                                          });
+                                        }
+                                      },
+                                      child: const Icon(
+                                        Icons.skip_previous,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(),
+                                    const Icon(
+                                      Icons.repeat,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Icon(
-                                Icons.skip_next,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                Icons.play_circle_fill,
-                                size: 50,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                Icons.skip_previous,
-                                color: Colors.white,
-                              ),
-                              SizedBox(),
-                              Icon(
-                                Icons.repeat,
-                                color: Colors.white,
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+                        );
+                      }
+                      return Container();
+                    },
                   )
                 ],
               );
