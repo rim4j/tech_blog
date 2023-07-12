@@ -4,10 +4,13 @@ import 'package:tech_blog/config/theme/app_colors.dart';
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   fontFamily: "dana",
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: AppColors.primaryColor,
+  ),
   colorScheme: const ColorScheme.light(
     background: Color.fromARGB(255, 255, 255, 255),
-    primary: Color.fromARGB(255, 68, 4, 87),
-    secondary: Color.fromARGB(255, 68, 4, 87),
+    primary: Color.fromARGB(255, 255, 255, 255),
+    secondary: AppColors.greyColor,
   ),
   textTheme: const TextTheme(
     displayLarge: TextStyle(

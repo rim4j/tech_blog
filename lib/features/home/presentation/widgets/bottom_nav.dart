@@ -16,6 +16,7 @@ class BottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double height = 56;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return BlocBuilder<BottomNavCubit, int>(
       builder: (context, index) {
@@ -27,7 +28,7 @@ class BottomNav extends StatelessWidget {
               CustomPaint(
                 size: Size(size.width, height + 6),
                 painter: BottomNavCurvePainter(
-                  backgroundColor: AppColors.scaffoldBg,
+                  backgroundColor: colorScheme.primary,
                 ),
               ),
               Center(
@@ -163,15 +164,15 @@ class BottomNavCurvePainter extends CustomPainter {
 }
 
 class NavBarIcon extends StatelessWidget {
-  const NavBarIcon(
-      {Key? key,
-      required this.text,
-      required this.icon,
-      required this.selected,
-      required this.onPressed,
-      this.selectedColor = const Color(0xffFF8527),
-      this.defaultColor = Colors.black54})
-      : super(key: key);
+  const NavBarIcon({
+    Key? key,
+    required this.text,
+    required this.icon,
+    required this.selected,
+    required this.onPressed,
+    this.selectedColor = const Color(0xffFF8527),
+    this.defaultColor = Colors.black54,
+  }) : super(key: key);
   final String text;
   final IconData icon;
   final bool selected;

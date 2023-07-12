@@ -9,11 +9,13 @@ class TopPodcastList extends StatelessWidget {
     required this.size,
     required this.bodyMargin,
     required this.topPodcasts,
+    required this.textTheme,
   }) : super(key: key);
 
   final Size size;
   final double bodyMargin;
   final List<PodcastEntity> topPodcasts;
+  final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class TopPodcastList extends StatelessWidget {
               size: size,
               index: index,
               topPodcastItem: topPodcastItem,
+              textTheme: textTheme,
             );
           })),
     );

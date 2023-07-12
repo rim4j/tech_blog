@@ -10,10 +10,12 @@ class CreatePostPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TextTheme textTheme = Theme.of(context).textTheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     var height = MediaQuery.of(context).size.height;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
+      backgroundColor: colorScheme.background,
       body: Padding(
         padding: EdgeInsets.all(Dimens.large),
         child: Column(
@@ -30,6 +32,7 @@ class CreatePostPage extends StatelessWidget {
                 ),
                 Text(
                   MyStrings.shareKnowledge,
+                  style: textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -38,6 +41,7 @@ class CreatePostPage extends StatelessWidget {
             ),
             Text(
               MyStrings.gigTech,
+              style: textTheme.bodyLarge,
             ),
             SizedBox(
               height: Dimens.large,
@@ -57,11 +61,15 @@ class CreatePostPage extends StatelessWidget {
                           ICONS.writeArticle,
                           height: Dimens.large,
                           width: Dimens.large,
+                          color: colorScheme.secondary,
                         ),
                         SizedBox(
                           width: Dimens.small,
                         ),
-                        const Text("مدیریت مقاله ها"),
+                        Text(
+                          "مدیریت مقاله ها",
+                          style: textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   ),
@@ -76,11 +84,15 @@ class CreatePostPage extends StatelessWidget {
                           ICONS.writePodcast,
                           height: Dimens.large,
                           width: Dimens.large,
+                          color: colorScheme.secondary,
                         ),
                         SizedBox(
                           width: Dimens.small,
                         ),
-                        const Text("مدیریت پادکست ها "),
+                        Text(
+                          "مدیریت پادکست ها ",
+                          style: textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   ),

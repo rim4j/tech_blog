@@ -34,6 +34,7 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
     var width = MediaQuery.of(context).size.width;
     var size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     var bodyMargin = width / 10;
 
     Future<void> selectImage() async {
@@ -72,7 +73,10 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
                     Navigator.pop(context);
                     setState(() {});
                   },
-                  child: Text(MyStrings.save),
+                  child: Text(
+                    MyStrings.save,
+                    style: textTheme.bodyLarge,
+                  ),
                 ),
               ],
             ),
@@ -107,6 +111,7 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
     }
 
     return Scaffold(
+      backgroundColor: colorScheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -170,7 +175,10 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
                       child: SizedBox(
                         width: width / 2,
                         child: ElevatedButton.icon(
-                          icon: const Icon(Icons.image),
+                          icon: Icon(
+                            Icons.image,
+                            color: colorScheme.secondary,
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
                             minimumSize: const Size(double.infinity, 50),
@@ -184,7 +192,10 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
                           onPressed: () {
                             selectImage();
                           },
-                          label: Text(MyStrings.selectImage),
+                          label: Text(
+                            MyStrings.selectImage,
+                            style: textTheme.bodyLarge,
+                          ),
                         ),
                       ),
                     ),
@@ -223,7 +234,7 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
                 title: MyStrings.editMainTextArticle,
                 iconImage: ICONS.bluePen,
                 onTap: () {
-                  _contentEditor(context, size, textTheme);
+                  _contentEditor(context, size, textTheme, colorScheme);
                 },
               ),
               Padding(
@@ -247,7 +258,12 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
                 title: MyStrings.selectCategory,
                 iconImage: ICONS.bluePen,
                 onTap: () {
-                  _selectedTag(context, size, textTheme);
+                  _selectedTag(
+                    context,
+                    size,
+                    textTheme,
+                    colorScheme,
+                  );
                 },
               ),
               Padding(
@@ -279,7 +295,11 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
 
   //create content article
   Future<dynamic> _contentEditor(
-      BuildContext context, Size size, TextTheme textTheme) {
+    BuildContext context,
+    Size size,
+    TextTheme textTheme,
+    ColorScheme colorScheme,
+  ) {
     return showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -288,7 +308,7 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
         return Container(
           height: size.height / 1.2,
           decoration: BoxDecoration(
-            color: AppColors.lightIcon,
+            color: colorScheme.background,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(Dimens.large - 2),
               topRight: Radius.circular(Dimens.large - 2),
@@ -315,14 +335,15 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
                       _contentController.text = "";
                     });
                   },
-                  child: const Text(MyStrings.deleteContentArticle),
+                  child: Text(
+                    MyStrings.deleteContentArticle,
+                    style: textTheme.bodyLarge,
+                  ),
                 ),
               ),
               TextFormField(
                 textAlign: TextAlign.right,
-                style: textTheme.displaySmall!.copyWith(
-                  color: AppColors.textTitle,
-                ),
+                style: textTheme.bodyLarge,
                 maxLines: 20,
                 controller: _contentController,
                 decoration: InputDecoration(
@@ -352,7 +373,11 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
 
   //selected tag bottom sheet
   Future<dynamic> _selectedTag(
-      BuildContext context, Size size, TextTheme textTheme) {
+    BuildContext context,
+    Size size,
+    TextTheme textTheme,
+    ColorScheme colorScheme,
+  ) {
     return showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -361,7 +386,7 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
         return Container(
           height: size.height / 2,
           decoration: BoxDecoration(
-            color: AppColors.lightIcon,
+            color: colorScheme.background,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(Dimens.large - 2),
               topRight: Radius.circular(Dimens.large - 2),

@@ -98,6 +98,7 @@ class HomePage extends StatelessWidget {
                     size: size,
                     bodyMargin: bodyMargin,
                     topPodcasts: topPodcasts,
+                    textTheme: textTheme,
                   ),
                   SizedBox(height: Dimens.large),
                 ],

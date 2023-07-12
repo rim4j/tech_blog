@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tech_blog/common/bloc/bottom_nav_cubit.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
-import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/article/presentation/pages/create_post_page.dart';
 import 'package:tech_blog/features/auth/presentation/pages/profile_page.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
+import 'package:tech_blog/features/home/presentation/bloc/theme_status.dart';
 import 'package:tech_blog/features/home/presentation/pages/home_page.dart';
 import 'package:tech_blog/features/home/presentation/widgets/bottom_nav.dart';
 
@@ -51,11 +51,13 @@ class _MainWrapperState extends State<MainWrapper> {
     var height = MediaQuery.of(context).size.height;
     var bodyMargin = MediaQuery.of(context).size.width / 10;
     var textTheme = Theme.of(context).textTheme;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
+      backgroundColor: colorScheme.background,
       key: _key,
       drawer: Drawer(
-        backgroundColor: AppColors.scaffoldBg,
+        backgroundColor: colorScheme.primary,
         child: ListView(
           children: [
             DrawerHeader(
@@ -76,7 +78,6 @@ class _MainWrapperState extends State<MainWrapper> {
               ),
               onTap: () {
                 _key.currentState!.closeDrawer();
-                // selectedPageIndex.value = 1;
               },
             ),
             ListTile(
@@ -101,8 +102,6 @@ class _MainWrapperState extends State<MainWrapper> {
               ),
               onTap: () {
                 _key.currentState!.closeDrawer();
-
-                // await Share.share(MyStrings.shareText);
               },
             ),
             ListTile(
@@ -115,8 +114,21 @@ class _MainWrapperState extends State<MainWrapper> {
               ),
               onTap: () {
                 _key.currentState!.closeDrawer();
+              },
+            ),
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, homeState) {
+                DarkMode darkMode = homeState.themeStatus as DarkMode;
 
-                // myLaunchUrl(MyStrings.techBlogGithubUrl);
+                return ListTile(
+                  title: Icon(
+                    darkMode.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                    color: colorScheme.secondary,
+                  ),
+                  onTap: () {
+                    BlocProvider.of<HomeBloc>(context).add(IsDarkModeEvent());
+                  },
+                );
               },
             ),
           ],
@@ -125,7 +137,7 @@ class _MainWrapperState extends State<MainWrapper> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: AppColors.scaffoldBg,
+        backgroundColor: colorScheme.primary,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -133,9 +145,9 @@ class _MainWrapperState extends State<MainWrapper> {
               onPressed: (() {
                 _key.currentState!.openDrawer();
               }),
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
-                color: AppColors.blackColor,
+                color: colorScheme.secondary,
               ),
             ),
             Image.asset(
@@ -143,17 +155,10 @@ class _MainWrapperState extends State<MainWrapper> {
               height: height / 13.6,
             ),
             IconButton(
-              onPressed: () {
-                // // method to show the search bar
-                // showSearch(
-                //     context: context,
-                //     // delegate to customize the search bar
-                //     delegate: CustomSearchDelegate()
-                // );
-              },
-              icon: const Icon(
+              onPressed: () {},
+              icon: Icon(
                 Icons.search,
-                color: AppColors.blackColor,
+                color: colorScheme.secondary,
               ),
             )
           ],

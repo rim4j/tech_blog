@@ -20,13 +20,15 @@ class ArticleListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var width = MediaQuery.of(context).size.width;
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
+      backgroundColor: colorScheme.background,
       //!app bar
       appBar: AppBarArticle(
+        colorScheme: colorScheme,
         title: title,
         backButton: () {
           Navigator.restorablePushNamedAndRemoveUntil(
@@ -54,7 +56,7 @@ class ArticleListPage extends StatelessWidget {
                   children: [
                     Text(
                       MyStrings.nothing,
-                      style: textTheme.titleSmall,
+                      style: textTheme.bodyLarge,
                     ),
                     SizedBox(height: Dimens.xLarge),
                     Image.asset(
@@ -96,7 +98,7 @@ class ArticleListPage extends StatelessWidget {
                 children: [
                   Text(
                     MyStrings.apiError,
-                    style: textTheme.titleSmall,
+                    style: textTheme.bodyLarge,
                   ),
                   SizedBox(height: Dimens.xLarge),
                   Image.asset(

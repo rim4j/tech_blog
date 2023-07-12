@@ -114,6 +114,7 @@ class ArticleItem extends StatelessWidget {
                 articleItem.title!,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
+                style: textTheme.bodyLarge,
               ),
             )
           ],

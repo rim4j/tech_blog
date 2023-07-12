@@ -38,9 +38,7 @@ class FormContainerWidgetState extends State<FormContainerWidget> {
       ),
       child: TextFormField(
         textAlign: TextAlign.center,
-        style: textTheme.displaySmall!.copyWith(
-          color: AppColors.textTitle,
-        ),
+        style: textTheme.bodyLarge,
         controller: widget.controller,
         keyboardType: widget.inputType,
         key: widget.fieldKey,

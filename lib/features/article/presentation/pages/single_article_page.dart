@@ -37,12 +37,12 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    // var width = MediaQuery.of(context).size.width;
-    // var bodyMargin = MediaQuery.of(context).size.width / 10;
     var textTheme = Theme.of(context).textTheme;
     var size = MediaQuery.of(context).size;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
+      backgroundColor: colorScheme.background,
       body: BlocBuilder<ArticleBloc, ArticleState>(
         builder: (context, homeState) {
           if (homeState.singleArticleStatus is SingleArticleLoading) {
@@ -205,7 +205,7 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
                             padding: EdgeInsets.all(Dimens.small),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.greyColor,
+                                backgroundColor: colorScheme.secondary,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
@@ -222,7 +222,10 @@ class _SingleArticlePageState extends State<SingleArticlePage> {
                                   arguments: tagItem.title,
                                 );
                               },
-                              child: Text(tagItem.title!),
+                              child: Text(
+                                tagItem.title!,
+                                style: textTheme.displayMedium,
+                              ),
                             ),
                           );
                         },

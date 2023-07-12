@@ -5,11 +5,13 @@ import 'package:tech_blog/config/theme/app_colors.dart';
 class AppBarArticle extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback backButton;
+  final ColorScheme colorScheme;
 
   const AppBarArticle({
     Key? key,
     required this.title,
     required this.backButton,
+    required this.colorScheme,
   }) : super(key: key);
 
   @override
@@ -23,10 +25,10 @@ class AppBarArticle extends StatelessWidget implements PreferredSizeWidget {
           child: Center(
               child: Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'dana',
-              fontSize: 17,
-              color: AppColors.primaryColor,
+              fontSize: 18,
+              color: colorScheme.secondary,
               fontWeight: FontWeight.w300,
             ),
           )),

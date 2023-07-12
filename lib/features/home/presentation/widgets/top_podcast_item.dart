@@ -13,12 +13,14 @@ class TopPodcastItem extends StatelessWidget {
     required this.topPodcastItem,
     required this.index,
     required this.onTap,
+    required this.textTheme,
   });
   final int index;
   final double bodyMargin;
   final Size size;
   final PodcastEntity topPodcastItem;
   final VoidCallback onTap;
+  final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class TopPodcastItem extends StatelessWidget {
                       topPodcastItem.title!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: textTheme.bodyLarge,
                     ),
                   ),
                 )),

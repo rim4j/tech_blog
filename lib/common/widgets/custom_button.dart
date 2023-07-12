@@ -16,6 +16,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
     return ElevatedButton(
       onPressed: loading == true ? () {} : onTap,
       style: ElevatedButton.styleFrom(
@@ -35,7 +36,7 @@ class CustomButton extends StatelessWidget {
             )
           : Text(
               title,
-              // style: fEncodeSansBold.copyWith(color: AppColors.primaryColor),
+              style: textTheme.titleMedium,
             ),
     );
   }

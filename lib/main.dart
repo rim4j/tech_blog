@@ -7,6 +7,7 @@ import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tech_blog/features/home/presentation/bloc/theme_status.dart';
 import 'package:tech_blog/features/intro/presentation/bloc/intro_bloc.dart';
 import 'package:tech_blog/features/intro/presentation/pages/splash_page.dart';
 import 'package:tech_blog/features/podcast/presentation/bloc/podcast_bloc.dart';
@@ -38,28 +39,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tech blog',
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.light,
-      initialRoute: "/",
-      onGenerateRoute: OnGenerateRoute.route,
-      locale: const Locale("fa"),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale("en", ""),
-        Locale("fa", ""),
-      ],
-      routes: {
-        "/": (context) {
-          return const SplashPage();
-        }
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, homeState) {
+        DarkMode darkMode = homeState.themeStatus as DarkMode;
+        return MaterialApp(
+          title: 'Tech blog',
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: darkMode.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          initialRoute: "/",
+          onGenerateRoute: OnGenerateRoute.route,
+          locale: const Locale("fa"),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale("en", ""),
+            Locale("fa", ""),
+          ],
+          routes: {
+            "/": (context) {
+              return const SplashPage();
+            }
+          },
+        );
       },
     );
   }

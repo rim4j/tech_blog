@@ -64,8 +64,10 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
     var width = MediaQuery.of(context).size.width;
     TextTheme textTheme = Theme.of(context).textTheme;
     var bodyMargin = width / 10;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
+      backgroundColor: colorScheme.background,
       body: SafeArea(
         child: BlocConsumer<PodcastBloc, PodcastState>(
           listener: (context, podcastState) {
@@ -157,9 +159,7 @@ class _SinglePodcastPageState extends State<SinglePodcastPage> {
                                       ),
                                       const Expanded(child: SizedBox()),
                                       GestureDetector(
-                                        onTap: () {
-                                          /// will added to your bookmark list
-                                        },
+                                        onTap: () {},
                                         child: Icon(
                                           Icons.bookmark_border_rounded,
                                           color: AppColors.lightIcon,

@@ -30,7 +30,7 @@ class _ManageArticlePageState extends State<ManageArticlePage> {
 
     userId.then((value) {
       BlocProvider.of<ArticleBloc>(context)
-          .add(LoadArticlePublishedByMe(userId: "4"));
+          .add(LoadArticlePublishedByMe(userId: value));
     });
   }
 
@@ -41,9 +41,13 @@ class _ManageArticlePageState extends State<ManageArticlePage> {
     Size size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
     const duration = Duration(milliseconds: 300);
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.background,
       //!app bar
       appBar: AppBarArticle(
+        colorScheme: colorScheme,
         backButton: () {
           Navigator.pop(context);
         },
@@ -59,7 +63,6 @@ class _ManageArticlePageState extends State<ManageArticlePage> {
           duration: duration,
           opacity: _showFab ? 1 : 0,
           child: FloatingActionButton.extended(
-            // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             label: Text(
               MyStrings.textManageArticle,
               style: textTheme.displayMedium,
