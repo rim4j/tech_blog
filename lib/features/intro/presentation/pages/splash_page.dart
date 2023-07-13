@@ -9,6 +9,7 @@ import 'package:tech_blog/common/widgets/custom_button.dart';
 
 import 'package:tech_blog/config/theme/app_colors.dart';
 import 'package:tech_blog/features/auth/domain/usecases/is_auth_usecase.dart';
+import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:tech_blog/features/intro/presentation/bloc/check_connection_status.dart';
 import 'package:tech_blog/features/intro/presentation/bloc/intro_bloc.dart';
 import 'package:tech_blog/locator.dart';
@@ -24,6 +25,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   initState() {
     BlocProvider.of<IntroBloc>(context).add(CheckConnectionEvent());
+    BlocProvider.of<HomeBloc>(context).add(InitIsDarkModeEvent());
 
     super.initState();
   }

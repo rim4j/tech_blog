@@ -19,11 +19,15 @@ import 'package:tech_blog/features/auth/domain/usecases/save_token_usecase.dart'
 import 'package:tech_blog/features/auth/domain/usecases/save_user_id_usecase.dart';
 import 'package:tech_blog/features/auth/domain/usecases/verify_user_usecase.dart';
 import 'package:tech_blog/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:tech_blog/features/home/data/data_sources/local/home_local_data_source.dart';
+import 'package:tech_blog/features/home/data/data_sources/local/home_local_data_source_impl.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source_impl.dart';
 import 'package:tech_blog/features/home/data/repositories/home_repository_impl.dart';
 import 'package:tech_blog/features/home/domain/repositories/home_repository.dart';
 import 'package:tech_blog/features/home/domain/usecases/get_home_items_usecase.dart';
+import 'package:tech_blog/features/home/domain/usecases/read_dark_mode_usecase.dart';
+import 'package:tech_blog/features/home/domain/usecases/set_dark_mode_usecase.dart';
 import 'package:tech_blog/features/home/presentation/bloc/home_bloc.dart';
 import 'package:tech_blog/features/intro/data/repositories/intro_repository_impl.dart';
 import 'package:tech_blog/features/intro/domain/repositories/intro_repository.dart';
@@ -51,10 +55,15 @@ Future<void> setup() async {
   locator.registerSingleton<PodcastRemoteDataSource>(
       PodcastRemoteDataSourceImpl());
 
+  locator.registerSingleton<HomeLocalDataSource>(HomeLocalDataSourceImpl());
+
   //!repositories
   //home
   locator.registerSingleton<HomeRepository>(
-    HomeRepositoryImpl(homeRemoteDataSource: locator()),
+    HomeRepositoryImpl(
+      homeRemoteDataSource: locator(),
+      homeLocalDataSource: locator(),
+    ),
   );
 
   //article
@@ -77,8 +86,14 @@ Future<void> setup() async {
       PodcastRepositoryImpl(podcastRemoteDataSource: locator()));
 
   //!useCases
+  //home
   locator.registerSingleton<GetHomeItemsUseCase>(
       GetHomeItemsUseCase(homeRepository: locator()));
+
+  locator.registerSingleton<SetDarkModeUseCase>(
+      SetDarkModeUseCase(homeRepository: locator()));
+  locator.registerSingleton<ReadDarkModeUseCase>(
+      ReadDarkModeUseCase(homeRepository: locator()));
 
   //article
 
@@ -124,6 +139,8 @@ Future<void> setup() async {
   locator.registerSingleton<HomeBloc>(
     HomeBloc(
       getHomeItemsUseCase: locator(),
+      readDarkModeUseCase: locator(),
+      setDarkModeUseCase: locator(),
     ),
   );
 

@@ -5,7 +5,7 @@ import 'package:tech_blog/common/constants/dimens.dart';
 import 'package:tech_blog/common/constants/images.dart';
 import 'package:tech_blog/common/constants/my_strings.dart';
 import 'package:tech_blog/common/constants/page_const.dart';
-import 'package:tech_blog/common/utils/get_storage.dart';
+import 'package:tech_blog/common/utils/custom_storage.dart';
 import 'package:tech_blog/features/article/domain/entities/article_entity.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_bloc.dart';
 import 'package:tech_blog/features/article/presentation/bloc/article_published_by_me_status.dart';
@@ -26,7 +26,7 @@ class _ManageArticlePageState extends State<ManageArticlePage> {
   void initState() {
     super.initState();
 
-    var userId = CustomGetStorage().readStorage("userId");
+    var userId = CustomStorage().readStorage("userId");
 
     userId.then((value) {
       BlocProvider.of<ArticleBloc>(context)

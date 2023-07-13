@@ -7,12 +7,13 @@ class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
   static const storage = FlutterSecureStorage();
 
-  Future<void> readStorage() async {
-    var token = await storage.read(key: "token");
-    var userId = await storage.read(key: "userId");
-
-    print(token);
-    print(userId);
+  Future<bool> isDarkMode() async {
+    // var token = await storage.read(key: "token");
+    // var userId = await storage.read(key: "userId");
+    var isDarkMode = await storage.read(key: "isDarkMode");
+    bool result = bool.parse("$isDarkMode");
+    print(result);
+    return result;
   }
 
   Future<void> logout(context) async {
@@ -29,9 +30,16 @@ class ProfilePage extends StatelessWidget {
           children: [
             const Text("profile page"),
             CustomButton(
-              title: "read token",
+              title: "is dark mode",
               onTap: () {
-                readStorage();
+                isDarkMode();
+              },
+            ),
+            CustomButton(
+              title: "delete darkmode",
+              onTap: () async {
+                await storage.delete(key: "isDarkMode");
+                isDarkMode();
               },
             ),
             CustomButton(

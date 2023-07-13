@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:tech_blog/common/resources/data_state.dart';
+import 'package:tech_blog/features/home/data/data_sources/local/home_local_data_source.dart';
 import 'package:tech_blog/features/home/data/data_sources/remote/home_remote_data_source.dart';
 import 'package:tech_blog/features/article/data/models/article_model.dart';
 import 'package:tech_blog/features/home/data/models/poster_model.dart';
@@ -12,9 +13,11 @@ import 'package:tech_blog/features/podcast/domain/entities/podcast_entity.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDataSource homeRemoteDataSource;
+  final HomeLocalDataSource homeLocalDataSource;
 
   HomeRepositoryImpl({
     required this.homeRemoteDataSource,
+    required this.homeLocalDataSource,
   });
 
   @override
@@ -55,6 +58,22 @@ class HomeRepositoryImpl implements HomeRepository {
       }
     } catch (e) {
       return const DataFailed("please check your connection");
+    }
+  }
+
+  @override
+  Future<void> setDarkMode(String key, bool value) async =>
+      homeLocalDataSource.setDarkModeStorage(key, value);
+
+  @override
+  Future<bool> readDarkMode() async {
+    var result = await homeLocalDataSource.readDarkModeStorage();
+
+    if (result == null) {
+      return false;
+    } else {
+      bool isDarkMode = bool.parse("$result");
+      return isDarkMode;
     }
   }
 }
